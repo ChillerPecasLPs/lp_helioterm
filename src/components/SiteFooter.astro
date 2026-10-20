@@ -1,0 +1,67 @@
+---
+import logoSlogan from '../assets/logos/horizontal-slogan-colorido.webp';
+import logoWhite from '../assets/logos/TXT_LOGOW.svg';
+import WaIcon from './WaIcon.astro';
+import { BRAND, SLOGAN, EMAIL, PHONE, ADDRESS } from '../config/site';
+
+interface Props {
+  nav: readonly { label: string; href: string }[];
+  footer: { tagline: string; madeBy: string; legal: string };
+  waHref: string;
+  waLabel: string;
+  look?: 'light' | 'blue' | 'ink';
+}
+const { nav, footer, waHref, waLabel, look = 'light' } = Astro.props;
+const dark = look !== 'light';
+---
+<footer class:list={['site-footer', `look-${look}`, { 'on-dark': dark }]}>
+  <div class="wrap grid">
+    <div class="id">
+      {dark ? (
+        <>
+          <img class="logo-w" src={logoWhite.src} width="1500" height="243" alt={BRAND} />
+          <p class="tag display">{footer.tagline}</p>
+        </>
+      ) : (
+        <img class="logo-s" src={logoSlogan.src} width="2000" height="454" alt={`${BRAND}. ${SLOGAN}`} />
+      )}
+      <p class="made">{footer.madeBy}</p>
+    </div>
+    <nav aria-label="Rodapé">
+      <ul class="plain">
+        {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="contact">
+      <a class="btn" href={waHref} target="_blank" rel="noopener" data-wa data-wa-place="footer"><WaIcon />{waLabel}</a>
+      {(EMAIL || PHONE || ADDRESS) && (
+        <ul class="plain info">
+          {EMAIL && <li><a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>}
+          {PHONE && <li><a href={`tel:${PHONE.replace(/\D/g, '')}`}>{PHONE}</a></li>}
+          {ADDRESS && <li>{ADDRESS}</li>}
+        </ul>
+      )}
+    </div>
+  </div>
+  <div class="wrap legal"><p class="small">{footer.legal}</p></div>
+</footer>
+
+<style>
+  .site-footer { padding-block: clamp(56px, 7vw, 104px) 28px; background: var(--cinza); color: var(--ink); }
+  .look-blue { background: var(--azul); }
+  .look-ink { background: var(--ink-deep); }
+  .grid { display: grid; gap: 40px; }
+  .id { display: grid; gap: 16px; align-content: start; }
+  .logo-s { width: min(380px, 80%); height: auto; }
+  .logo-w { height: 34px; width: auto; justify-self: start; }
+  .tag { font-size: 1.75rem; line-height: 1.1; max-width: 22ch; }
+  .made { font-weight: 700; }
+  nav ul { display: grid; gap: 0; }
+  nav a { display: flex; align-items: center; min-height: var(--touch); font-weight: 700; text-decoration: none; }
+  nav a:hover { text-decoration: underline; text-underline-offset: 0.3em; }
+  .contact { display: grid; gap: 20px; justify-items: start; align-content: start; }
+  .info { display: grid; gap: 6px; }
+  .legal { margin-top: 48px; color: var(--muted); }
+  .on-dark .legal { color: var(--azul-pale); }
+  @media (min-width: 900px) { .grid { grid-template-columns: 1.4fr 1fr 1fr; gap: 64px; } }
+</style>

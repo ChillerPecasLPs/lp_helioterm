@@ -1,0 +1,320 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import WaIcon from '../components/WaIcon.astro';
+import SpecTable from '../components/SpecTable.astro';
+import Faq from '../components/Faq.astro';
+import LeadForm from '../components/LeadForm.astro';
+import Pic from '../components/Pic.astro';
+import { copy } from '../content/copy.v4';
+import { defaultWhatsappUrl, fillTemplate, whatsappUrl } from '../lib/whatsapp';
+import { htc, HTC_MODELS, HTC_ROWS } from '../lib/htc';
+
+import fotoFrente from '../assets/photos/fabrica-chiller-frente.jpg';
+import fotoPainel from '../assets/photos/fabrica-painel.jpg';
+import fotoVentilador from '../assets/photos/fabrica-ventilador.jpg';
+import fotoConexoes from '../assets/photos/chiller-conexoes.jpg';
+import fotoAberto from '../assets/photos/chiller-aberto.jpg';
+import fotoParede from '../assets/photos/chiller-parede.jpg';
+import dutadoSF from '../assets/renders/dutado-semfundo.png';
+import portatilSF from '../assets/renders/portatil-semfundo.png';
+
+const wa = defaultWhatsappUrl(copy);
+
+// Garantia de build: os números do comparativo da copy precisam bater com chillers-htc.json.
+for (const m of HTC_MODELS) {
+  for (const r of HTC_ROWS) {
+    const fromCopy = (copy.compare.values as Record<string, Record<string, string>>)[m]?.[r.key];
+    const fromJson = htc[m].values[r.key];
+    if (fromCopy !== fromJson) throw new Error(`v4: ${m} / ${r.key}: copy "${fromCopy}" difere do JSON "${fromJson}"`);
+  }
+}
+const rowKeys = copy.compare.rows.map((r) => r.key);
+const models = HTC_MODELS.map((m) => ({
+  name: m,
+  tagline: (copy.chillers.models as Record<string, { tagline: string }>)[m].tagline,
+  cta: (copy.chillers.modelCtas as Record<string, string>)[m],
+  href: whatsappUrl(fillTemplate(copy.whatsapp.modelTemplate, { modelo: m })),
+  max: htc[m].capacidadeMax,
+}));
+const nf = new Intl.NumberFormat('pt-BR');
+---
+<BaseLayout title={copy.meta.title} description={copy.meta.description} variant={copy.variant} bodyClass="v4">
+  <SiteHeader nav={copy.header.nav} cta={copy.header.whatsappCta} ctaHref={wa} tone="light" />
+
+  <main id="conteudo">
+    <section class="hero" aria-labelledby="h1">
+      <div class="wrap hero-grid">
+        <h1 id="h1" data-reveal>{copy.hero.headline}</h1>
+        <div class="hero-text">
+          <p class="lead" data-reveal style="--d:1">{copy.hero.subheadline}</p>
+          <div class="actions" data-reveal style="--d:2">
+            <a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="hero"><WaIcon />{copy.hero.primaryCta}</a>
+            <a class="link-sub" href="#dimensionamento">{copy.hero.secondaryCta}</a>
+          </div>
+          <ul class="ticks trust" data-reveal style="--d:3">
+            {copy.hero.trust.map((t) => <li>{t}</li>)}
+          </ul>
+        </div>
+        <figure class="hero-photo">
+          <Pic src={fotoFrente} alt={copy.hero.imageAlt + ', branco, com painel de controle e grade lateral, em um galpão industrial'} sizes="(min-width: 1000px) 52vw, 100vw" widths={[640, 960, 1280, 1600]} eager />
+        </figure>
+      </div>
+    </section>
+
+    <section id="comparativo" class="compare" aria-labelledby="cp-t">
+      <div class="wrap">
+        <h2 id="cp-t" data-reveal>{copy.compare.title}</h2>
+        <div class="cmp" data-reveal style="--d:1">
+          <SpecTable caption={copy.chillers.tableTitle} note={copy.chillers.tableNote} rows={rowKeys} collapseExtra id="tabela-htc" />
+          <p class="more-wrap js-only"><button type="button" class="btn more" aria-expanded="false" aria-controls="tabela-htc" data-more data-more-label={copy.compare.moreLabel}>{copy.compare.moreLabel}</button></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="chillers" class="chill" aria-labelledby="ch-t">
+      <div class="wrap">
+        <h2 id="ch-t" data-reveal>{copy.chillers.title}</h2>
+        <p class="lead" data-reveal style="--d:1">{copy.chillers.intro}</p>
+        <ul class="plain models">
+          {models.map((m, i) => (
+            <li data-reveal style={`--d:${i}`}>
+              <div class="m-name"><h3>{m.name}</h3><p class="m-max">até <strong>{nf.format(m.max)}</strong> kcal/h</p></div>
+              <p class="m-tag">{m.tagline}</p>
+              <a class="btn" href={m.href} target="_blank" rel="noopener" data-wa data-wa-place={`model-${m.name}`} data-model={m.name}><WaIcon />{m.cta}</a>
+            </li>
+          ))}
+        </ul>
+        <div class="gallery">
+          <figure class="g1" data-reveal><Pic src={fotoPainel} alt="Painel de controle do chiller com display do controlador, chave liga/desliga, botão de emergência e placa Helioterm" sizes="(min-width: 900px) 36vw, 100vw" widths={[480, 800, 1200]} /></figure>
+          <figure class="g2" data-reveal style="--d:1"><Pic src={fotoVentilador} alt="Ventilador do condensador no topo do chiller, com o cabo de alimentação" sizes="(min-width: 900px) 36vw, 100vw" widths={[480, 800, 1200]} /></figure>
+          <figure class="g3" data-reveal style="--d:2"><Pic src={fotoConexoes} alt="Lateral do chiller com as conexões hidráulicas de entrada e saída de água" sizes="(min-width: 900px) 28vw, 100vw" widths={[480, 800, 1200]} /></figure>
+          <figure class="g4" data-reveal style="--d:3"><Pic src={fotoAberto} alt="Chiller com o painel lateral aberto, mostrando compressor, bomba e tubulação internos" sizes="(min-width: 900px) 24vw, 100vw" widths={[480, 800]} /></figure>
+        </div>
+        <ul class="plain benefits">
+          {copy.chillers.benefits.map((b, i) => (<li data-reveal style={`--d:${i % 4}`}><h3>{b.title}</h3><p>{b.text}</p></li>))}
+        </ul>
+      </div>
+    </section>
+
+    <section id="aplicacoes" class="apps" aria-labelledby="ap-t">
+      <div class="wrap two">
+        <div>
+          <h2 id="ap-t" data-reveal>{copy.applications.title}</h2>
+          <figure class="ap-photo" data-reveal style="--d:1"><Pic src={fotoParede} alt="Chiller Helioterm com logotipo no painel frontal, apoiado em rodízios junto a uma parede de blocos" sizes="(min-width: 900px) 30vw, 100vw" widths={[480, 720, 960]} /></figure>
+        </div>
+        <ul class="ticks big" data-reveal style="--d:1">{copy.applications.items.map((i) => <li>{i}</li>)}</ul>
+      </div>
+    </section>
+
+    <section id="desumidificadores" class="dehum" aria-labelledby="dh-t">
+      <div class="wrap">
+        <h2 id="dh-t" data-reveal>{copy.dehumidifiers.title}</h2>
+        <p class="lead" data-reveal style="--d:1">{copy.dehumidifiers.intro}</p>
+      </div>
+      <div class="two-fields">
+        <article class="field-a" data-reveal>
+          <Pic src={dutadoSF} alt="Render do desumidificador industrial dutado Helioterm, caixa azul-acinzentada com duas bocas de duto e display digital" sizes="(min-width: 900px) 40vw, 90vw" widths={[612]} />
+          <div class="info">
+            <h3>{copy.dehumidifiers.products.dutado.name}</h3>
+            <p>{copy.dehumidifiers.products.dutado.tagline}</p>
+            <ul class="ticks">{copy.dehumidifiers.products.dutado.bullets.map((b) => <li>{b}</li>)}</ul>
+          </div>
+        </article>
+        <article class="field-b" data-reveal style="--d:1">
+          <Pic src={portatilSF} alt="Render do desumidificador industrial portátil Helioterm, gabinete preto e branco com serpentina na parte de cima" sizes="(min-width: 900px) 30vw, 70vw" widths={[500]} />
+          <div class="info">
+            <h3>{copy.dehumidifiers.products.portatil.name}</h3>
+            <p>{copy.dehumidifiers.products.portatil.tagline}</p>
+            <ul class="ticks">{copy.dehumidifiers.products.portatil.bullets.map((b) => <li>{b}</li>)}</ul>
+          </div>
+        </article>
+      </div>
+      <div class="wrap line-wrap">
+        <div class="line" data-reveal>
+          <div>
+            <h3>{copy.dehumidifiers.line.title}</h3>
+            <p>{copy.dehumidifiers.line.text}</p>
+          </div>
+          <a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="dehumidifiers"><WaIcon />{copy.dehumidifiers.cta}</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="dimensionamento" class="sizing on-dark" aria-labelledby="sz-t">
+      <div class="wrap">
+        <h2 id="sz-t" data-reveal>{copy.sizing.title}</h2>
+        <div class="two">
+          <p class="lead" data-reveal style="--d:1">{copy.sizing.intro}</p>
+          <div>
+            <ul class="ticks" data-reveal>{copy.sizing.inputs.map((i) => <li>{i}</li>)}</ul>
+            <p class="note" data-reveal>{copy.sizing.note}</p>
+            <p data-reveal><a class="link-sub" href="#contato">{copy.sizing.cta}</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="por-que" class="why" aria-labelledby="why-t">
+      <div class="wrap two">
+        <div>
+          <h2 id="why-t" data-reveal>{copy.whyUs.title}</h2>
+          <p class="lead" data-reveal style="--d:1">{copy.whyUs.intro}</p>
+        </div>
+        <dl class="why-pts">
+          {copy.whyUs.points.map((p, i) => (<div data-reveal style={`--d:${i % 2}`}><dt>{p.title}</dt><dd>{p.text}</dd></div>))}
+        </dl>
+      </div>
+    </section>
+
+    <section id="faq" class="faq-sec" aria-labelledby="faq-t">
+      <div class="wrap faq-grid">
+        <h2 id="faq-t" data-reveal>{copy.faq.title}</h2>
+        <Faq items={copy.faq.items} mode="accordion" />
+      </div>
+    </section>
+
+    <section id="contato" class="contact" aria-labelledby="ct-t">
+      <div class="wrap two">
+        <div>
+          <h2 id="ct-t" data-reveal>{copy.form.title}</h2>
+          <p class="lead" data-reveal style="--d:1">{copy.form.intro}</p>
+          <p data-reveal style="--d:2"><a class="link-sub" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="form">{copy.header.whatsappCta}</a></p>
+        </div>
+        <div class="sheet" data-reveal style="--d:1">
+          <LeadForm
+            variant={copy.variant} id="form-v4" fields={copy.form.fields} submit={copy.form.submit}
+            success={copy.form.success} error={copy.form.error} privacyNote={copy.form.privacyNote} privacyHref={copy.form.privacyHref}
+            waMessage={copy.whatsapp.defaultMessage}
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter nav={copy.header.nav} footer={copy.footer} waHref={wa} waLabel={copy.header.whatsappCta} look="light" />
+  <WhatsAppFloat href={wa} label={copy.whatsapp.floatingLabel} />
+
+  <script>
+    const btn = document.querySelector<HTMLButtonElement>('[data-more]');
+    const table = document.getElementById('tabela-htc');
+    if (btn && table) {
+      btn.addEventListener('click', () => {
+        const open = table.dataset.collapsed === 'true';
+        table.dataset.collapsed = open ? 'false' : 'true';
+        btn.setAttribute('aria-expanded', String(open));
+        btn.textContent = open ? 'Ver menos' : (btn.dataset.moreLabel ?? 'Ver mais');
+      });
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  section { padding-block: var(--section); }
+  .two { display: grid; gap: 36px; align-items: start; }
+  section h2 { color: var(--azul); }
+  .on-dark h2 { color: var(--branco); }
+  .lead { margin-top: 20px; }
+  .js-only { display: none; }
+  :global(.js) .js-only { display: block; }
+
+  /* Hero: a foto real é o objeto e passa da borda do hero */
+  .hero { background: var(--cinza); padding-block: clamp(32px, 5vw, 72px) 0; position: relative; z-index: 2; overflow-x: clip; }
+  .hero-grid { display: grid; gap: 24px; padding-bottom: 0; }
+  .hero h1 { font-size: clamp(1.75rem, 5vw, 5.4rem); line-height: 1.04; color: var(--azul); }
+  .hero-text { display: grid; gap: 22px; align-content: start; padding-bottom: clamp(32px, 4vw, 56px); }
+  .hero .lead { margin: 0; max-width: 48ch; }
+  .actions { display: grid; gap: 4px; justify-items: start; }
+  .trust { font-size: var(--step-small); font-weight: 700; color: var(--ink-soft); }
+  .hero-photo { margin: 0 calc(var(--gutter) * -1); }
+  .hero-photo :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: 66% 50%; }
+  @media (min-width: 1000px) {
+    .hero-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px 56px; align-items: start; }
+    .hero h1 { grid-column: 1 / -1; }
+    .hero-text { grid-column: 1; grid-row: 2; padding-bottom: 72px; }
+    .hero-photo { grid-column: 2; grid-row: 2; margin: 0 calc(-1 * max(var(--gutter), (100vw - var(--maxw)) / 2 + var(--gutter))) -72px 0; }
+    .hero-photo :global(img) { aspect-ratio: 7 / 5; }
+  }
+
+  .cmp { margin-top: 36px; }
+  .more-wrap { margin-top: 20px; }
+  .more { background: var(--azul); color: var(--branco); }
+  .more:hover { background: var(--azul-hover); }
+  @media (min-width: 768px) { .more-wrap { display: none !important; } }
+
+  .models { display: grid; gap: 28px; margin-top: 40px; }
+  .models li { display: grid; gap: 14px; padding: 28px clamp(18px, 3vw, 40px); background: var(--cinza); align-items: center; }
+  .models li:nth-child(2) { background: var(--cinza-2); }
+  .m-name h3 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; font-size: clamp(2.25rem, 4vw, 3.5rem); line-height: 1; color: var(--azul); }
+  .m-max { margin: 4px 0 0; font-weight: 700; }
+  .m-max strong { font-size: var(--step-lead); }
+  .m-tag { margin: 0; max-width: 52ch; }
+  .gallery { display: grid; gap: 12px; margin-top: 64px; grid-template-columns: 1fr 1fr; }
+  .gallery figure { margin: 0; }
+  .gallery :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .g1 { grid-column: 1 / -1; }
+  .g1 :global(img) { aspect-ratio: 4 / 3; }
+  .g2 { grid-column: 1 / -1; }
+  .g2 :global(img) { aspect-ratio: 16 / 10; }
+  .g3 :global(img), .g4 :global(img) { aspect-ratio: 1 / 1; }
+  .benefits { display: grid; gap: 24px; margin-top: 64px; }
+  .benefits h3 { color: var(--azul); margin-bottom: 4px; }
+
+  .apps { background: var(--cinza); }
+  .ap-photo { margin-top: 32px; }
+  .ap-photo :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .ticks.big { font-size: var(--step-lead); font-weight: 700; gap: 14px; }
+
+  .dehum { padding-bottom: 0; }
+  .two-fields { display: grid; margin-top: 48px; }
+  .two-fields article { display: grid; gap: 20px; padding: clamp(28px, 5vw, 72px) var(--gutter); align-content: end; }
+  .two-fields :global(img) { max-height: 320px; width: auto; max-width: 100%; margin-inline: auto; }
+  .field-a { background: var(--cinza); }
+  .field-b { background: var(--azul-pale); }
+  .info { max-width: 520px; width: 100%; margin-inline: auto; display: grid; gap: 8px; }
+  .info h3 { color: var(--azul); }
+  .line-wrap { padding-block: clamp(40px, 5vw, 72px); }
+  .line { background: var(--azul); color: var(--branco); padding: clamp(24px, 3.5vw, 48px); display: grid; gap: 20px; align-items: center; --focus: #fff; }
+  .line h3 { margin-bottom: 8px; }
+  .line p { max-width: 64ch; }
+
+  .sizing { background: var(--ink-deep); }
+  .sizing .two { margin-top: 28px; }
+  .note { margin: 20px 0; max-width: 54ch; color: var(--azul-pale); }
+  .why-pts { display: grid; gap: 24px; margin: 0; }
+  .why-pts dt { font-weight: 700; font-size: var(--step-lead); color: var(--azul); margin-bottom: 4px; }
+  .why-pts dd { margin: 0; }
+  .faq-sec { background: var(--cinza); }
+  .faq-grid { display: grid; gap: 32px; }
+  .contact { background: var(--azul); }
+  .contact h2, .contact .lead { color: var(--branco); }
+  .contact { --focus: #fff; color: var(--branco); }
+  .sheet { background: var(--branco); color: var(--ink); padding: clamp(20px, 3vw, 40px); --focus: var(--azul); }
+  .sheet :global(.form-note) { color: var(--ink-soft); }
+  .sheet :global(.form-note a) { color: var(--azul); }
+
+  @media (min-width: 768px) {
+    .models li { grid-template-columns: 1.1fr 1.4fr auto; gap: 32px; }
+    .gallery { grid-template-columns: repeat(12, 1fr); grid-template-rows: auto auto; gap: 16px; }
+    .g1 { grid-column: 1 / 6; grid-row: 1 / 3; }
+    .g1 :global(img) { aspect-ratio: auto; height: 100%; min-height: 480px; }
+    .g2 { grid-column: 6 / 13; }
+    .g2 :global(img) { aspect-ratio: 16 / 9; }
+    .g3 { grid-column: 6 / 9; }
+    .g4 { grid-column: 9 / 13; }
+    .g3 :global(img), .g4 :global(img) { aspect-ratio: 4 / 5; }
+    .benefits { grid-template-columns: repeat(2, 1fr); gap: 32px 56px; }
+    .two-fields { grid-template-columns: 1fr 1fr; }
+    .line { grid-template-columns: 1fr auto; gap: 48px; }
+  }
+  @media (min-width: 900px) {
+    .two { grid-template-columns: 5fr 7fr; gap: 80px; }
+    .ticks.big { columns: 2; display: block; }
+    .ticks.big li { break-inside: avoid; margin-bottom: 14px; }
+    .sizing .two { grid-template-columns: 5fr 7fr; }
+    .faq-grid { grid-template-columns: 1fr; }
+    .faq-grid :global(.faq) { margin-left: calc((100% - 0px) * 4 / 12); }
+  }
+</style>

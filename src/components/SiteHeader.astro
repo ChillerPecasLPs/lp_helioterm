@@ -1,0 +1,91 @@
+---
+import logoColor from '../assets/logos/horizontal-colorido.webp';
+import logoWhite from '../assets/logos/TXT_LOGOW.svg';
+import WaIcon from './WaIcon.astro';
+import { BRAND } from '../config/site';
+
+interface Props {
+  nav: readonly { label: string; href: string }[];
+  cta: string;
+  ctaHref: string;
+  /** blue: fundo #085ba7 · sky: fundo #108bd1 · light: fundo claro */
+  tone?: 'blue' | 'sky' | 'light';
+  sticky?: boolean;
+  /** accent: botão laranja · plain: botão claro (quando o laranja já está em outro lugar da primeira tela) */
+  ctaStyle?: 'accent' | 'plain';
+}
+const { nav, cta, ctaHref, tone = 'light', sticky = false, ctaStyle = 'accent' } = Astro.props;
+const dark = tone !== 'light';
+---
+<header class:list={['site-header', `tone-${tone}`, { sticky, 'on-dark': dark }]}>
+  <div class="bar wrap">
+    <a class="brand" href="#top" aria-label={`${BRAND}, ir ao início`}>
+      {dark
+        ? <img src={logoWhite.src} width="1500" height="243" alt={BRAND} />
+        : <img src={logoColor.src} width="2000" height="303" alt={BRAND} />}
+    </a>
+    <nav class="nav" aria-label="Principal">
+      <ul class="plain">
+        {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+      </ul>
+    </nav>
+    <a class:list={['btn', 'head-cta', { plain: ctaStyle === 'plain' }]} href={ctaHref} target="_blank" rel="noopener" data-wa data-wa-place="header"><WaIcon />{cta}</a>
+    <details class="menu">
+      <summary aria-label="Menu"><span class="bars" aria-hidden="true"></span></summary>
+      <ul class="plain panel">
+        {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+      </ul>
+    </details>
+  </div>
+</header>
+
+<style>
+  .site-header { position: relative; z-index: 40; }
+  .site-header.sticky { position: sticky; top: 0; }
+  .tone-blue { background: var(--azul); }
+  .tone-sky { background: var(--azul-claro); }
+  .tone-light { background: var(--cinza); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 72px; }
+  .brand { display: inline-flex; align-items: center; min-height: var(--touch); }
+  .brand img { height: 26px; width: auto; }
+  .tone-light .brand img { height: 34px; }
+  .nav { display: none; }
+  .nav ul { display: flex; gap: 4px; flex-wrap: wrap; }
+  .nav a { display: inline-flex; align-items: center; min-height: var(--touch); padding: 0 12px; font-weight: 700; text-decoration: none; font-size: var(--step-small); }
+  .nav a:hover { text-decoration: underline; text-underline-offset: 0.3em; text-decoration-color: currentColor; }
+  .head-cta { display: none; min-height: 48px; padding: 0 20px; font-size: var(--step-small); }
+  .head-cta.plain { background: var(--branco); color: var(--ink-deep); }
+  .head-cta.plain:hover { background: var(--azul-pale); }
+  .tone-light .head-cta.plain { background: var(--azul); color: var(--branco); }
+  .menu summary { list-style: none; display: grid; place-items: center; width: var(--touch); height: var(--touch); cursor: pointer; }
+  .menu summary::-webkit-details-marker { display: none; }
+  .bars, .bars::before, .bars::after { display: block; width: 24px; height: 3px; background: currentColor; content: ''; }
+  .bars { position: relative; }
+  .bars::before { position: absolute; top: -8px; }
+  .bars::after { position: absolute; top: 8px; }
+  .menu { position: static; }
+  .panel {
+    position: absolute; left: 0; right: 0; top: 100%; z-index: 50; padding: 8px var(--gutter) 20px;
+    background: var(--ink-deep); color: var(--branco); display: grid;
+  }
+  .panel a { display: flex; align-items: center; min-height: var(--touch); font-weight: 700; text-decoration: none; }
+  .tone-sky { color: var(--ink-deep); }
+  .panel a:hover { text-decoration: underline; text-underline-offset: 0.3em; }
+  @media (min-width: 1100px) {
+    .nav { display: block; }
+    .head-cta { display: inline-flex; }
+    .menu { display: none; }
+  }
+  @media (min-width: 820px) and (max-width: 1099px) {
+    .head-cta { display: inline-flex; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLDetailsElement>('.site-header .menu').forEach((d) => {
+    d.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) d.open = false;
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') d.open = false; });
+  });
+</script>

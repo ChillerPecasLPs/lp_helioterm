@@ -1,0 +1,44 @@
+---
+import { HTC_MODELS, HTC_ROWS, HTC_CORE_ROWS, htc } from '../lib/htc';
+interface Props {
+  caption: string;
+  note?: string;
+  /** Chaves das linhas; padrão: as 8 essenciais. */
+  rows?: readonly string[];
+  /** Linhas extras escondidas no celular até o "Ver mais" (só v4). */
+  collapseExtra?: boolean;
+  id?: string;
+  class?: string;
+}
+const { caption, note, rows = HTC_CORE_ROWS, collapseExtra = false, id, class: cls } = Astro.props;
+const labels = Object.fromEntries(HTC_ROWS.map((r) => [r.key, r.label]));
+const core = new Set(HTC_CORE_ROWS);
+---
+<div class:list={['table-wrap', cls]} data-spec-wrap={collapseExtra ? '' : undefined}>
+  <table class="spec" id={id} data-collapsed={collapseExtra ? 'true' : undefined}>
+    <caption>{caption}</caption>
+    <thead>
+      <tr>
+        <th scope="col"><span class="sr-only">Característica</span></th>
+        {HTC_MODELS.map((m) => <th scope="col">{m}</th>)}
+      </tr>
+    </thead>
+    <tbody>
+      {rows.map((k) => (
+        <tr class:list={{ extra: collapseExtra && !core.has(k) }}>
+          <th scope="row">{labels[k]}</th>
+          {HTC_MODELS.map((m) => <td data-key={k}>{htc[m].values[k]}</td>)}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  {note && <p class="small muted note">{note}</p>}
+</div>
+
+<style>
+  .note { margin-top: 12px; }
+  @media (max-width: 767px) {
+    :global(.js) table[data-collapsed='true'] .extra { display: none; }
+    :global(.js) table[data-collapsed='false'] .extra { display: table-row; }
+  }
+</style>

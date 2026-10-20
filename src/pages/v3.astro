@@ -1,0 +1,376 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import WaIcon from '../components/WaIcon.astro';
+import SpecTable from '../components/SpecTable.astro';
+import Faq from '../components/Faq.astro';
+import LeadForm from '../components/LeadForm.astro';
+import Pic from '../components/Pic.astro';
+import { copy } from '../content/copy.v3';
+import { defaultWhatsappUrl, whatsappUrl } from '../lib/whatsapp';
+
+import fotoFrente from '../assets/photos/fabrica-chiller-frente.jpg';
+import fotoLateral from '../assets/photos/fabrica-chiller-lateral.jpg';
+import fotoPainel from '../assets/photos/fabrica-painel.jpg';
+import fotoParede from '../assets/photos/chiller-parede.jpg';
+import dutadoSF from '../assets/renders/dutado-semfundo.png';
+import portatilSF from '../assets/renders/portatil-semfundo.png';
+
+const wa = defaultWhatsappUrl(copy);
+// "Qual é o equipamento certo para o seu caso?": duas tintas, duas linhas
+const [h1a, h1b] = ['Qual é o equipamento certo', 'para o seu caso?'];
+const kind: Record<string, 'chiller' | 'dutado' | 'portatil' | 'none'> = {
+  injetora: 'chiller', 'cnc-laser': 'chiller', laboratorio: 'chiller', 'ambiente-umido': 'dutado', 'ponto-umido': 'portatil', outro: 'none',
+};
+const stepsText = copy.steps.progressLabel;
+---
+<BaseLayout title={copy.meta.title} description={copy.meta.description} variant={copy.variant} bodyClass="v3">
+  <SiteHeader nav={copy.header.nav ?? []} cta={copy.header.whatsappCta} ctaHref={wa} tone="sky" ctaStyle="plain" />
+
+  <main id="conteudo">
+    <section class="hero" aria-labelledby="h1">
+      <div class="wrap hero-grid">
+        <h1 id="h1"><span class="l1">{h1a}</span> <span class="l2">{h1b}</span></h1>
+        <p class="lead hero-lead">{copy.hero.subheadline}</p>
+
+        <div class="guide" id="guia" data-guide data-steps={stepsText} data-done={copy.guide.done} data-incomplete={copy.guide.incomplete}>
+          <h2 class="guide-title">{copy.guide.title}</h2>
+          <p class="progress" data-progress aria-live="polite" hidden></p>
+          <ul class="plain opts">
+            {copy.guide.options.map((o) => (
+              <li>
+                <a class="opt" href={whatsappUrl(o.whatsappTemplate)} target="_blank" rel="noopener"
+                  data-id={o.id} data-kind={kind[o.id]} data-rec={o.recommendation} data-reason={o.reason}
+                  data-wa-href={whatsappUrl(o.whatsappTemplate)} data-wa data-wa-place={`guide-option-${o.id}`}>
+                  <span class="mark" aria-hidden="true"></span>{o.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div class="js-only gate">
+            <button type="button" class="btn" data-see>{copy.hero.primaryCta}</button>
+            <p class="hint small" data-hint>{copy.guide.incomplete}</p>
+          </div>
+        </div>
+
+        <figure class="hero-pic" data-hero-pic>
+          <Pic src={fotoPainel} alt="Painel de controle do chiller Helioterm com display do controlador, chave liga/desliga e botão de emergência, ao lado da grade do condensador" sizes="(min-width: 1000px) 40vw, 100vw" widths={[640, 960, 1280]} eager />
+        </figure>
+
+        <div class="result" data-result hidden aria-live="polite">
+          <div class="r-pic" data-pic>
+            <Pic src={fotoFrente} alt="Chiller compacto Helioterm de frente, no galpão da fábrica" sizes="(min-width: 1000px) 30vw, 90vw" widths={[480, 720]} class="p-chiller" />
+            <Pic src={dutadoSF} alt="Render do desumidificador industrial dutado Helioterm" sizes="320px" widths={[612]} class="p-dutado" />
+            <Pic src={portatilSF} alt="Render do desumidificador industrial portátil Helioterm" sizes="320px" widths={[500]} class="p-portatil" />
+          </div>
+          <h3 class="r-rec" data-rec></h3>
+          <p class="r-reason" data-reason></p>
+          <a class="btn" data-go href={wa} target="_blank" rel="noopener" data-wa data-wa-place="guide-result"><WaIcon />{copy.header.whatsappCta}</a>
+          <p class="r-done" data-done-msg hidden>{copy.guide.done}</p>
+        </div>
+
+        <p class="alt"><a class="link-sub" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="hero">{copy.hero.secondaryCta}</a></p>
+      </div>
+    </section>
+
+    <section id="passos" class="steps" aria-labelledby="st-t">
+      <div class="wrap">
+        <h2 id="st-t" data-reveal>{copy.steps.title}</h2>
+        <ol class="plain stair">
+          {copy.steps.items.map((it, i) => (
+            <li style={`--i:${i}`} data-reveal>
+              <h3>{it.title}</h3>
+              <p>{it.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section id="aplicacoes" class="apps" aria-labelledby="ap-t">
+      <div class="wrap">
+        <h2 id="ap-t" data-reveal>{copy.applications.title}</h2>
+        <ul class="plain lineup" data-reveal style="--d:1">
+          {copy.applications.items.map((i) => <li>{i}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <section id="chillers" class="chill" aria-labelledby="ch-t">
+      <div class="wrap two">
+        <div>
+          <h2 id="ch-t" data-reveal>{copy.chillers.title}</h2>
+          <p class="lead" data-reveal style="--d:1">{copy.chillers.intro}</p>
+          <ul class="plain benefits">
+            {copy.chillers.benefits.map((b, i) => (<li data-reveal style={`--d:${i % 2}`}><h3>{b.title}</h3><p>{b.text}</p></li>))}
+          </ul>
+        </div>
+        <figure class="ch-photo" data-reveal style="--d:1">
+          <Pic src={fotoLateral} alt="Chiller compacto Helioterm no piso do galpão, visto de lado, com painel de controle e grade do condensador" sizes="(min-width: 900px) 44vw, 100vw" widths={[640, 960, 1280]} />
+        </figure>
+      </div>
+      <div class="wrap">
+        <SpecTable caption={copy.chillers.tableTitle} note={copy.chillers.tableNote} />
+        <p class="after"><a class="link-sub" href="#contato">{copy.chillers.cta}</a></p>
+      </div>
+    </section>
+
+    <section id="desumidificadores" class="dehum" aria-labelledby="dh-t">
+      <div class="wrap">
+        <h2 id="dh-t" data-reveal>{copy.dehumidifiers.title}</h2>
+        <p class="lead" data-reveal style="--d:1">{copy.dehumidifiers.intro}</p>
+        <div class="prods">
+          <article data-reveal>
+            <Pic src={dutadoSF} alt="Render do desumidificador industrial dutado Helioterm, caixa azul-acinzentada com duas bocas de duto e display digital" sizes="(min-width: 900px) 40vw, 90vw" widths={[612]} />
+            <h3>{copy.dehumidifiers.products.dutado.name}</h3>
+            <p>{copy.dehumidifiers.products.dutado.tagline}</p>
+            <ul class="ticks">{copy.dehumidifiers.products.dutado.bullets.map((b) => <li>{b}</li>)}</ul>
+          </article>
+          <article data-reveal style="--d:1">
+            <Pic src={portatilSF} alt="Render do desumidificador industrial portátil Helioterm, gabinete preto e branco com serpentina na parte de cima" sizes="(min-width: 900px) 30vw, 70vw" widths={[500]} />
+            <h3>{copy.dehumidifiers.products.portatil.name}</h3>
+            <p>{copy.dehumidifiers.products.portatil.tagline}</p>
+            <ul class="ticks">{copy.dehumidifiers.products.portatil.bullets.map((b) => <li>{b}</li>)}</ul>
+          </article>
+        </div>
+        <div class="line" data-reveal>
+          <h3>{copy.dehumidifiers.line.title}</h3>
+          <p>{copy.dehumidifiers.line.text}</p>
+          <p><a class="link-sub" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="dehumidifiers">{copy.dehumidifiers.cta}</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="dimensionamento" class="sizing on-dark" aria-labelledby="sz-t">
+      <div class="wrap two">
+        <div>
+          <h2 id="sz-t" data-reveal>{copy.sizing.title}</h2>
+          <p class="lead" data-reveal style="--d:1">{copy.sizing.intro}</p>
+          <figure class="sz-photo" data-reveal style="--d:2"><Pic src={fotoFrente} alt="Chiller compacto Helioterm de frente, no galpão da fábrica" sizes="(min-width: 900px) 36vw, 100vw" widths={[480, 720, 960]} /></figure>
+        </div>
+        <div>
+          <ul class="ticks" data-reveal>{copy.sizing.inputs.map((i) => <li>{i}</li>)}</ul>
+          <p class="note" data-reveal>{copy.sizing.note}</p>
+          <p data-reveal><a class="link-sub" href="#contato">{copy.sizing.cta}</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="por-que" class="why" aria-labelledby="why-t">
+      <div class="wrap">
+        <h2 id="why-t" data-reveal>{copy.whyUs.title}</h2>
+        <p class="lead" data-reveal style="--d:1">{copy.whyUs.intro}</p>
+        <ul class="plain why-pts">
+          {copy.whyUs.points.map((p, i) => (<li data-reveal style={`--d:${i % 3}`}><h3>{p.title}</h3><p>{p.text}</p></li>))}
+        </ul>
+      </div>
+    </section>
+
+    <section id="faq" class="faq-sec" aria-labelledby="faq-t">
+      <div class="wrap"><h2 id="faq-t" data-reveal>{copy.faq.title}</h2></div>
+      <Faq items={copy.faq.items} mode="accordion" class="bands" />
+    </section>
+
+    <section id="contato" class="contact" aria-labelledby="ct-t">
+      <div class="wrap two">
+        <div>
+          <h2 id="ct-t" data-reveal>{copy.form.title}</h2>
+          <p class="lead" data-reveal style="--d:1">{copy.form.intro}</p>
+          <p data-reveal style="--d:2"><a class="link-sub" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="form">{copy.header.whatsappCta}</a></p>
+          <figure class="sz-photo" data-reveal style="--d:2"><Pic src={fotoParede} alt="Chiller Helioterm com logotipo no painel frontal, apoiado em rodízios junto a uma parede de blocos" sizes="(min-width: 900px) 36vw, 100vw" widths={[480, 720, 960]} /></figure>
+        </div>
+        <div class="sheet" data-reveal style="--d:1">
+          <LeadForm
+            variant={copy.variant} id="form-v3" fields={copy.form.fields} submit={copy.form.submit}
+            success={copy.form.success} error={copy.form.error} privacyNote={copy.form.privacyNote} privacyHref={copy.form.privacyHref}
+            waMessage={copy.whatsapp.defaultMessage}
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter nav={copy.header.nav ?? []} footer={copy.footer} waHref={wa} waLabel={copy.header.whatsappCta} look="ink" />
+  <WhatsAppFloat href={wa} label={copy.whatsapp.floatingLabel} />
+
+  <script>
+    const root = document.querySelector<HTMLElement>('[data-guide]');
+    const result = document.querySelector<HTMLElement>('[data-result]');
+    if (root && result) {
+      const opts = Array.from(root.querySelectorAll<HTMLAnchorElement>('.opt'));
+      const see = root.querySelector<HTMLButtonElement>('[data-see]')!;
+      const hint = root.querySelector<HTMLElement>('[data-hint]')!;
+      const progress = root.querySelector<HTMLElement>('[data-progress]')!;
+      const rec = result.querySelector<HTMLElement>('[data-rec]')!;
+      const reason = result.querySelector<HTMLElement>('[data-reason]')!;
+      const go = result.querySelector<HTMLAnchorElement>('[data-go]')!;
+      const doneMsg = result.querySelector<HTMLElement>('[data-done-msg]')!;
+      const pic = result.querySelector<HTMLElement>('[data-pic]')!;
+      const heroPic = document.querySelector<HTMLElement>('[data-hero-pic]');
+      let current: HTMLAnchorElement | null = null;
+      let shown = false;
+      const setStep = (n: number) => { progress.hidden = false; progress.textContent = (root.dataset.steps ?? '').replace('{atual}', String(n)); };
+      const paint = () => {
+        if (!current) return;
+        rec.textContent = current.dataset.rec ?? '';
+        reason.textContent = current.dataset.reason ?? '';
+        go.href = current.dataset.waHref ?? go.href;
+        pic.dataset.kind = current.dataset.kind ?? 'none';
+        pic.hidden = current.dataset.kind === 'none';
+      };
+      opts.forEach((a) => {
+        a.setAttribute('role', 'button');
+        a.setAttribute('aria-pressed', 'false');
+        a.removeAttribute('target');
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          current = a;
+          opts.forEach((o) => { o.setAttribute('aria-pressed', String(o === a)); o.classList.toggle('on', o === a); });
+          hint.hidden = true;
+          doneMsg.hidden = true;
+          if (shown) { paint(); setStep(2); } else { setStep(1); }
+        });
+      });
+      see.addEventListener('click', () => {
+        if (!current) { hint.classList.add('nudge'); opts[0].focus(); return; }
+        shown = true; paint(); result.hidden = false; if (heroPic) heroPic.hidden = true; root.querySelector('.gate')?.classList.add('done'); setStep(2);
+        const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        result.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'nearest' });
+      });
+      go.addEventListener('click', () => { setStep(3); doneMsg.hidden = false; });
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  section { padding-block: var(--section); }
+  .two { display: grid; gap: 36px; align-items: start; }
+  section h2 { color: var(--azul); }
+  .lead { margin-top: 20px; }
+  .js-only { display: none; }
+  :global(.js) .js-only { display: grid; }
+
+  /* Hero: cartaz de cor chapada, duas tintas */
+  .hero { background: var(--azul-claro); color: var(--ink-deep); padding-block: clamp(32px, 5vw, 72px) clamp(48px, 6vw, 96px); --focus: var(--ink-deep); }
+  .hero-grid { display: grid; gap: 24px; align-items: start; }
+  .hero h1 { font-size: clamp(2.25rem, 8.4vw, 7.2rem); line-height: 0.98; letter-spacing: 0; }
+  .hero h1 .l1 { color: var(--branco); }
+  .hero h1 .l2 { color: var(--ink-deep); }
+  .hero h1 span { display: inline; }
+  .hero-lead { color: var(--ink-deep); font-weight: 600; max-width: 52ch; margin: 0; }
+  .guide { display: grid; gap: 16px; margin-top: 8px; }
+  .hero .guide-title { font-size: 2rem; color: var(--ink-deep); }
+  .progress { font-weight: 700; background: var(--ink-deep); color: var(--branco); justify-self: start; padding: 6px 14px; margin: 0; }
+  .opts { display: grid; gap: 10px; grid-template-columns: 1fr; }
+  .opt {
+    display: flex; align-items: center; gap: 14px; min-height: 68px; padding: 12px 20px;
+    background: var(--branco); color: var(--ink-deep); font-weight: 700; font-size: var(--step-lead); line-height: 1.2; text-decoration: none;
+    transition: background-color 0.16s var(--ease), color 0.16s var(--ease), transform 0.16s var(--ease);
+  }
+  .opt:hover { background: var(--ink-deep); color: var(--branco); transform: translateY(-2px); }
+  .opt .mark { flex: none; width: 14px; height: 14px; background: var(--azul-claro); }
+  .opt.on { background: var(--ink-deep); color: var(--branco); }
+  .opt.on .mark { background: var(--laranja); }
+  .opt:hover .mark { background: var(--laranja); }
+  .gate { gap: 8px; justify-items: start; }
+  :global(.js) .gate.done { display: none; }
+  .hint { margin: 0; font-weight: 600; }
+  .hint.nudge { background: var(--ink-deep); color: var(--branco); padding: 8px 12px; }
+  .result { background: var(--ink-deep); color: var(--branco); padding: clamp(20px, 2.6vw, 36px); display: grid; gap: 16px; align-content: start; --focus: #fff; }
+  .result[hidden] { display: none; }
+  .r-pic { background: var(--cinza); display: grid; place-items: center; min-height: 200px; }
+  .r-pic[hidden] { display: none; }
+  .r-pic :global(img) { display: none; max-height: 240px; width: auto; max-width: 100%; }
+  .r-pic[data-kind='chiller'] :global(.p-chiller), .r-pic[data-kind='dutado'] :global(.p-dutado), .r-pic[data-kind='portatil'] :global(.p-portatil) { display: block; }
+  .r-pic[data-kind='chiller'] :global(.p-chiller) { width: 100%; height: 240px; object-fit: cover; max-height: none; }
+  .r-rec { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; font-size: 1.75rem; line-height: 1.1; }
+  .r-reason { color: var(--azul-pale); }
+  .result .btn { justify-self: start; }
+  .r-done { font-weight: 700; }
+  .r-done[hidden] { display: none; }
+  .alt { margin: 0; }
+  .hero-pic { margin: 0; }
+  .hero-pic[hidden] { display: none; }
+  .hero-pic :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: 40% 40%; }
+  @media (min-width: 640px) { .opts { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1000px) {
+    .hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 28px 56px; }
+    .hero h1 { grid-column: 1 / -1; font-size: clamp(3rem, 7.6vw, 8rem); }
+    .hero h1 .l1, .hero h1 .l2 { display: block; }
+    .hero-lead { grid-column: 1 / -1; }
+    .guide { grid-column: 1; grid-row: 3; }
+    .result, .hero-pic { grid-column: 2; grid-row: 3 / 5; align-self: start; }
+    .hero-pic :global(img) { aspect-ratio: 5 / 4; }
+    .alt { grid-column: 1; grid-row: 4; }
+    .opts { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* Passos em escada */
+  .steps { background: var(--ink-deep); color: var(--branco); }
+  .steps h2 { color: var(--branco); }
+  .stair { display: grid; gap: 16px; margin-top: 40px; }
+  .stair li { background: var(--azul); padding: 24px clamp(20px, 3vw, 36px); display: grid; gap: 6px; }
+  .stair li:nth-child(2) { background: var(--azul-claro); color: var(--ink-deep); }
+  .stair li:nth-child(3) { background: var(--cinza); color: var(--ink-deep); }
+  .stair h3 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; font-size: 1.75rem; line-height: 1.1; }
+  @media (min-width: 800px) {
+    .stair li { margin-left: calc(var(--i) * clamp(0px, 8vw, 160px)); grid-template-columns: 1fr 1fr; align-items: center; gap: 24px; }
+  }
+
+  /* Aplicações: uma fila, um tamanho */
+  .apps { background: var(--cinza); }
+  .lineup { display: flex; flex-wrap: wrap; gap: 10px 0; margin-top: 36px; font-family: var(--font-display); text-transform: uppercase; font-size: clamp(1.5rem, 3vw, 2.75rem); line-height: 1.1; color: var(--ink); }
+  .lineup li { display: inline-flex; align-items: center; }
+  .lineup li::after { content: ''; display: inline-block; width: 0.35em; height: 0.35em; background: var(--azul-claro); margin-inline: 0.55em; }
+  .lineup li:last-child::after { display: none; }
+
+  .chill .two { margin-bottom: 48px; }
+  .benefits { display: grid; gap: 20px; margin-top: 32px; }
+  .benefits h3 { margin-bottom: 4px; }
+  .ch-photo :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .after { margin-top: 16px; }
+
+  .dehum { background: var(--azul-claro); color: var(--ink-deep); --focus: var(--ink-deep); }
+  .dehum h2 { color: var(--ink-deep); }
+  .prods { display: grid; gap: 32px; margin-top: 40px; align-items: end; }
+  .prods article { display: grid; gap: 10px; align-content: end; }
+  .prods article :global(img) { width: auto; max-width: 100%; max-height: 300px; margin-bottom: 8px; }
+  .dehum .ticks li::before { background: var(--ink-deep); }
+  .line { margin-top: 48px; background: var(--ink-deep); color: var(--branco); padding: clamp(22px, 3vw, 40px); display: grid; gap: 12px; --focus: #fff; max-width: 880px; }
+  .line p { max-width: 70ch; }
+
+  .sizing { background: var(--ink-deep); }
+  .sizing h2 { color: var(--branco); }
+  .sz-photo { margin-top: 32px; }
+  .sz-photo :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .note { margin: 20px 0; max-width: 54ch; color: var(--azul-pale); }
+  .why { background: var(--cinza); }
+  .why-pts { display: grid; gap: 28px; margin-top: 40px; }
+  .why-pts h3 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; font-size: 1.75rem; line-height: 1.1; color: var(--azul); margin-bottom: 6px; }
+
+  .faq-sec { padding-bottom: 0; }
+  .faq-sec .wrap { margin-bottom: 32px; }
+  .faq-sec :global(.faq.bands) { display: block; }
+  .faq-sec :global(.faq.bands details) { padding-inline: var(--gutter); }
+  .faq-sec :global(.faq.bands details:nth-child(4n+1)) { --faq-bg: var(--azul); --faq-fg: var(--branco); }
+  .faq-sec :global(.faq.bands details:nth-child(4n+2)) { --faq-bg: var(--azul-claro); --faq-fg: var(--ink-deep); }
+  .faq-sec :global(.faq.bands details:nth-child(4n+3)) { --faq-bg: var(--cinza); }
+  .faq-sec :global(.faq.bands details:nth-child(4n)) { --faq-bg: var(--ink-deep); --faq-fg: var(--branco); }
+  .faq-sec :global(.faq.bands details summary) { max-width: var(--maxw); margin-inline: auto; padding-inline: 0; min-height: 84px; font-family: var(--font-display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.4rem, 2.4vw, 2rem); }
+  .faq-sec :global(.faq.bands details > p) { max-width: var(--maxw); margin-inline: auto; padding-inline: 0; }
+  .faq-sec :global(.faq.bands details > p) { width: min(100%, 72ch); margin-left: max(0px, calc((100% - var(--maxw)) / 2)); }
+
+  .contact { background: var(--azul-claro); color: var(--ink-deep); --focus: var(--ink-deep); }
+  .contact h2 { color: var(--ink-deep); }
+  .sheet { background: var(--branco); color: var(--ink); padding: clamp(20px, 3vw, 40px); }
+  .sheet :global(.form-note) { color: var(--ink-soft); }
+  .sheet :global(.form-note a) { color: var(--azul); }
+
+  @media (min-width: 900px) {
+    .two { grid-template-columns: 1fr 1fr; gap: 72px; }
+    .prods { grid-template-columns: 7fr 5fr; }
+    .why-pts { grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  }
+</style>

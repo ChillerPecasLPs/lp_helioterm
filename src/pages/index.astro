@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { variants } from '../data/variants';
+import logoWhite from '../assets/logos/TXT_LOGOW.svg';
+import { BRAND, INDEXABLE } from '../config/site';
+import Pic from '../components/Pic.astro';
+import p1 from '../assets/previews/v1.jpg';
+import p2 from '../assets/previews/v2.jpg';
+import p3 from '../assets/previews/v3.jpg';
+import p4 from '../assets/previews/v4.jpg';
+import p5 from '../assets/previews/v5.jpg';
+const previews: Record<string, typeof p1> = { v1: p1, v2: p2, v3: p3, v4: p4, v5: p5 };
+---
+<BaseLayout title="Comparação dos modelos | Chiller Peças" description="Página interna: os cinco modelos de landing page da Chiller Peças para comparar e testar." internal bodyClass="idx">
+  <header class="top on-dark">
+    <div class="wrap bar">
+      <img src={logoWhite.src} width="1500" height="243" alt={BRAND} />
+      <p class="small">Página interna, fora da divulgação</p>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="intro on-dark" aria-labelledby="h1">
+      <div class="wrap">
+        <h1 id="h1" data-reveal>Cinco modelos, um objetivo: gerar contato</h1>
+        <p class="lead" data-reveal style="--d:1">Todos levam ao WhatsApp e ao formulário e identificam a variante em cada contato. Abra cada modelo, compare e escolha o que testar primeiro.</p>
+        {!INDEXABLE && <p class="small flag">Indexação desligada (noindex) em todas as páginas.</p>}
+      </div>
+    </section>
+
+    <section class="list" aria-label="Os cinco modelos">
+      <ol class="plain">
+        {variants.map((v, i) => (
+          <li>
+            <div class="wrap row" data-reveal style={`--d:${i % 2}`}>
+              <div class="name">
+                <p class="id">{v.id}</p>
+                <h2>{v.name}</h2>
+                <a class="shot" href={v.href} tabindex="-1" aria-hidden="true"><Pic src={previews[v.id]} alt="" decorative sizes="(min-width: 900px) 40vw, 100vw" widths={[480, 800, 1280]} /></a>
+                <a class="btn" href={v.href}>Abrir o modelo {v.id}</a>
+              </div>
+              <dl>
+                <div data-reveal style="--d:1"><dt>Ângulo</dt><dd>{v.angle}</dd></div>
+                <div data-reveal style="--d:2"><dt>Gatilho principal</dt><dd>{v.trigger}</dd></div>
+                <div data-reveal style="--d:3"><dt>Layout</dt><dd>{v.layout}</dd></div>
+                <div><dt>Título e botão principal</dt><dd>{v.headline} Botão: “{v.cta}”.</dd></div>
+              </dl>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .top { background: var(--azul); }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 72px; }
+  .bar img { height: 28px; width: auto; }
+  .intro { background: var(--azul); padding-block: clamp(40px, 7vw, 112px); }
+  .intro h1 { color: var(--branco); max-width: 20ch; }
+  .intro .lead { margin-top: 24px; color: var(--branco); }
+  .flag { margin-top: 16px; color: var(--azul-pale); font-weight: 700; }
+  .list li:nth-child(odd) { background: var(--cinza); }
+  .row { display: grid; gap: 24px; padding-block: clamp(36px, 5vw, 72px); align-items: start; }
+  .name { display: grid; gap: 14px; justify-items: start; }
+  .id { font-family: var(--font-display); font-size: 1.75rem; color: var(--azul-claro); line-height: 1; margin: 0; }
+  .name h2 { color: var(--azul); }
+  .shot { display: block; width: 100%; transition: transform 0.25s var(--ease); }
+  .shot:hover { transform: translateY(-4px); }
+  .shot :global(img) { width: 100%; aspect-ratio: 8 / 5; object-fit: cover; object-position: top; }
+  dl { display: grid; gap: 16px; margin: 0; }
+  dt { font-weight: 700; color: var(--azul); }
+  dd { margin: 0; max-width: 64ch; }
+  @media (min-width: 900px) { .row { grid-template-columns: 5fr 7fr; gap: 72px; } }
+</style>

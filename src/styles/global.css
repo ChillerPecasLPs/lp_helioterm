@@ -1,0 +1,165 @@
+/* Chiller Peças: tokens, base e peças compartilhadas (botões, formulário, tabela, FAQ).
+   Pares de cor (razão de contraste, medida por scripts/contrast.mjs):
+   branco / #085ba7 6,85 · tinta #0a2238 / branco 16,2 · tinta / #efefef 14,1 · #085ba7 / branco 6,85
+   tinta / laranja #ff901c 7,13 (botão) · tinta profunda #031a2e / #108bd1 4,73 (texto sobre azul claro)
+   branco / #108bd1 3,73 (só título grande, 3:1) · #dbe9f6 / #085ba7 5,55 · #44566a / #efefef 6,56
+   Laranja sobre branco tem só 2,27: o botão é identificado pelo texto escuro (7,13), nunca por ele só. */
+:root {
+  /* Marca */
+  --azul: #085ba7;
+  --azul-claro: #108bd1;
+  --laranja: #ff901c;
+  --cinza: #efefef;
+  --branco: #ffffff;
+  /* Derivados (texto e superfícies) */
+  --ink: #0a2238;
+  --ink-deep: #031a2e;
+  --ink-soft: #44566a;
+  --cinza-2: #e1e6eb;
+  --azul-pale: #dbe9f6;
+  --azul-hover: #06487f;
+  --laranja-hover: #ffa23f;
+
+  /* Papéis */
+  --bg: var(--branco);
+  --fg: var(--ink);
+  --muted: var(--ink-soft);
+  --accent: var(--laranja);
+  --on-accent: var(--ink);
+  --focus: var(--azul);
+
+  /* Tipografia */
+  --font-display: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
+  --font-text: 'Quicksand Variable', 'Quicksand', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Cinco degraus de tamanho */
+  --step-small: 0.9375rem;
+  --step-body: 1.0625rem;
+  --step-lead: clamp(1.125rem, 0.4vw + 1.02rem, 1.3125rem);
+  --step-h2: clamp(1.625rem, 2.4vw + 0.9rem, 3.25rem);
+  --step-display: clamp(2rem, 5.2vw + 0.4rem, 6.25rem);
+
+  /* Espaço */
+  --gutter: clamp(16px, 3vw, 40px);
+  --section: clamp(72px, 9vw, 160px);
+  --radius: 2px;
+  --touch: 48px;
+  --maxw: 1360px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 88px; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-text);
+  font-size: var(--step-body);
+  line-height: 1.55;
+  font-weight: 500;
+  text-rendering: optimizeLegibility;
+}
+img, svg, video { display: block; max-width: 100%; height: auto; }
+h1, h2, h3, h4, p, ul, ol, figure, dl, dd { margin: 0; }
+ul[role='list'], ol[role='list'], .plain { list-style: none; padding: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+a { color: inherit; text-underline-offset: 0.18em; }
+::selection { background: var(--azul-claro); color: var(--ink-deep); }
+
+h1, h2, .display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.005em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+h1 { font-size: var(--step-display); }
+h2 { font-size: var(--step-h2); }
+h3 { font-family: var(--font-text); font-weight: 700; font-size: var(--step-lead); line-height: 1.25; }
+p { max-width: 62ch; }
+.lead { font-size: var(--step-lead); line-height: 1.5; }
+.small { font-size: var(--step-small); }
+.muted { color: var(--muted); }
+
+.wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gutter); }
+.section { padding-block: var(--section); }
+
+.skip {
+  position: absolute; left: 8px; top: -80px; z-index: 100;
+  background: var(--branco); color: var(--ink); padding: 12px 16px; font-weight: 700;
+}
+.skip:focus { top: 8px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } /* taste-skill-ignore: texto só para leitores de tela */
+
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.on-dark { --focus: #ffffff; color: var(--branco); }
+
+/* ---------- Botões ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6em;
+  min-height: 56px; padding: 0 28px; border: 0; border-radius: var(--radius);
+  background: var(--accent); color: var(--on-accent);
+  font-family: var(--font-text); font-weight: 700; font-size: 1.0625rem; line-height: 1.2; text-align: center; text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.18s var(--ease), transform 0.18s var(--ease);
+}
+.btn:hover { background: var(--laranja-hover); transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+.btn svg { width: 1.35em; height: 1.35em; flex: none; }
+.btn--block { width: 100%; }
+/* Ação secundária: link sublinhado, claramente abaixo do botão */
+.link-sub {
+  display: inline-flex; align-items: center; min-height: var(--touch);
+  font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.25em;
+}
+.link-sub:hover { text-decoration-color: var(--accent); }
+
+/* ---------- Listas ---------- */
+.ticks { list-style: none; padding: 0; display: grid; gap: 10px; }
+.ticks li { position: relative; padding-left: 22px; }
+.ticks li::before { content: ''; position: absolute; left: 0; top: 0.62em; width: 9px; height: 9px; background: currentColor; }
+
+/* ---------- Tabela técnica ---------- */
+.table-wrap { width: 100%; overflow-x: auto; }
+.spec { width: 100%; border-collapse: collapse; font-size: var(--step-small); font-variant-numeric: tabular-nums; background: var(--branco); color: var(--ink); }
+.spec caption { text-align: left; padding: 0 0 12px; font-weight: 700; }
+.spec th, .spec td { padding: 12px 10px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--cinza-2); }
+.spec thead th { background: var(--azul); color: var(--branco); font-weight: 700; border-bottom: 0; vertical-align: bottom; }
+.spec tbody th { font-weight: 700; width: 30%; }
+.spec tbody tr:nth-child(even) > * { background: #f4f6f8; }
+.spec td { overflow-wrap: anywhere; }
+@media (min-width: 768px) { .spec th, .spec td { padding: 14px 16px; } }
+
+/* ---------- Formulário (markup; envio e validação: agente 5) ---------- */
+.lead-form { display: grid; gap: 18px; }
+.field { display: grid; gap: 8px; }
+.field label { font-weight: 700; font-size: var(--step-small); line-height: 1.3; }
+.field input, .field select, .field textarea {
+  width: 100%; min-height: var(--touch); padding: 12px 14px;
+  background: var(--branco); color: var(--ink);
+  border: 2px solid var(--ink-soft); border-radius: var(--radius);
+}
+.field textarea { min-height: 128px; resize: vertical; }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-color: var(--ink); }
+.field [aria-invalid='true'] { border-color: #b3261e; }
+.field .hint { font-size: var(--step-small); color: var(--muted); }
+.form-note { font-size: var(--step-small); color: var(--muted); max-width: 52ch; }
+.form-note a { display: inline-block; padding: 12px 0; margin: -12px 0; }
+.form-status { font-weight: 700; }
+.form-status[hidden] { display: none; }
+.on-dark .form-note, .on-dark .field .hint { color: var(--azul-pale); }
+
+/* ---------- Revelar ao rolar (só com JS; sem JS o conteúdo fica visível) ---------- */
+.js [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); transition-delay: calc(var(--d, 0) * 80ms); }
+.js [data-reveal].is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; transition-delay: 0ms !important; }
+  .js [data-reveal] { opacity: 1; transform: none; }
+  .btn:hover { transform: none; }
+}

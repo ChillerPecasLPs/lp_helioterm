@@ -1,0 +1,83 @@
+---
+/**
+ * Formulário de contato: SÓ MARKUP. Validação, envio, honeypot, fallback e eventos ficam com o agente 5.
+ * Ganchos para o JS de integração:
+ *   form[data-lead-form]            · data-variant · data-form-endpoint (PUBLIC_FORM_ENDPOINT) · data-wa-base · data-wa-message
+ *   [data-form-status="success"|"error"]  mensagens da copy (hidden)
+ *   input[name=variant] oculto com o id da variante
+ */
+import { FORM_ENDPOINT, WHATSAPP_NUMBER } from '../config/site';
+import { whatsappUrl } from '../lib/whatsapp';
+
+type Field = { label: string; required: boolean; options?: readonly string[] };
+interface Props {
+  variant: string;
+  id: string;
+  fields: Partial<Record<'name' | 'company' | 'phone' | 'email' | 'product' | 'application', Field>>;
+  submit: string;
+  success: string;
+  error: string;
+  privacyNote?: string;
+  privacyHref?: string;
+  waMessage: string;
+  /** Ordem dos campos (o formulário curto do hero usa só 4). */
+  order?: ('name' | 'company' | 'phone' | 'email' | 'product' | 'application')[];
+  class?: string;
+}
+const {
+  variant, id, fields, submit, success, error, privacyNote, privacyHref, waMessage,
+  order = ['name', 'company', 'phone', 'email', 'product', 'application'],
+  class: cls,
+} = Astro.props;
+
+const attrs: Record<string, { type?: string; autocomplete?: string; inputmode?: string }> = {
+  name: { type: 'text', autocomplete: 'name' },
+  company: { type: 'text', autocomplete: 'organization' },
+  phone: { type: 'tel', autocomplete: 'tel', inputmode: 'tel' },
+  email: { type: 'email', autocomplete: 'email', inputmode: 'email' },
+};
+// "Veja a política de privacidade." vira link só nesse trecho
+const [noteHead, noteTail] = privacyNote ? privacyNote.split('política de privacidade') : ['', ''];
+---
+<form
+  class:list={['lead-form', cls]}
+  id={id}
+  method="post"
+  action=""
+  novalidate
+  data-lead-form
+  data-variant={variant}
+  data-form-endpoint={FORM_ENDPOINT}
+  data-wa-base={whatsappUrl(undefined, WHATSAPP_NUMBER)}
+  data-wa-message={waMessage}
+>
+  <input type="hidden" name="variant" value={variant} />
+  {order.map((key) => {
+    const f = fields[key];
+    if (!f) return null;
+    const fid = `${id}-${key}`;
+    const a = attrs[key];
+    const req = f.required;
+    return (
+      <div class="field">
+        <label for={fid}>{f.label}{req && <span class="sr-only"> (obrigatório)</span>}</label>
+        {key === 'product' ? (
+          <select id={fid} name={key} required={req} aria-required={req ? 'true' : undefined}>
+            <option value="">Selecione</option>
+            {(f.options ?? []).map((o) => <option value={o}>{o}</option>)}
+          </select>
+        ) : key === 'application' ? (
+          <textarea id={fid} name={key} rows="4" required={req} aria-required={req ? 'true' : undefined}></textarea>
+        ) : (
+          <input id={fid} name={key} type={a.type as any} autocomplete={a.autocomplete} inputmode={a.inputmode as any} required={req} aria-required={req ? 'true' : undefined} />
+        )}
+      </div>
+    );
+  })}
+  <button class="btn btn--block" type="submit">{submit}</button>
+  <p class="form-status" role="status" aria-live="polite" data-form-status="success" hidden>{success}</p>
+  <p class="form-status" role="alert" data-form-status="error" hidden>{error}</p>
+  {privacyNote && (
+    <p class="form-note">{noteHead}<a href={privacyHref}>política de privacidade</a>{noteTail}</p>
+  )}
+</form>

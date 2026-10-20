@@ -1,0 +1,258 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import WaIcon from '../components/WaIcon.astro';
+import SpecTable from '../components/SpecTable.astro';
+import Faq from '../components/Faq.astro';
+import LeadForm from '../components/LeadForm.astro';
+import Pic from '../components/Pic.astro';
+import { copy } from '../content/copy.v5';
+import { defaultWhatsappUrl } from '../lib/whatsapp';
+import avatar from '../assets/logos/C_LOGO_DB.svg';
+
+import fotoRodas from '../assets/photos/chiller-rodas.jpg';
+import fotoLateral from '../assets/photos/fabrica-chiller-lateral.jpg';
+import fotoPainel from '../assets/photos/fabrica-painel.jpg';
+import dutadoSF from '../assets/renders/dutado-semfundo.png';
+import portatilSF from '../assets/renders/portatil-semfundo.png';
+
+const wa = defaultWhatsappUrl(copy);
+const [htc, dutado, portatil] = [copy.showcase.items.slice(0, 3), copy.showcase.items[3], copy.showcase.items[4]];
+---
+<BaseLayout title={copy.meta.title} description={copy.meta.description} variant={copy.variant} bodyClass="v5">
+  <SiteHeader nav={copy.header.nav} cta={copy.header.whatsappCta} ctaHref={wa} tone="light" />
+
+  <main id="conteudo">
+    <section class="hero" aria-labelledby="h1">
+      <div class="wrap hero-grid">
+        <div class="hero-text">
+          <h1 id="h1" data-reveal>{copy.hero.headline}</h1>
+          <p class="lead" data-reveal style="--d:1">{copy.hero.subheadline}</p>
+          <div class="cta-block" data-reveal style="--d:2">
+            <p class="cta-lead">{copy.hero.ctaLead}</p>
+            <a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="hero"><WaIcon />{copy.hero.primaryCta}</a>
+            <a class="link-sub" href="#conversa">{copy.hero.secondaryCta}</a>
+          </div>
+          <ul class="ticks trust" data-reveal style="--d:3">
+            {copy.hero.trust.map((t) => <li>{t}</li>)}
+          </ul>
+        </div>
+      </div>
+      <figure class="hero-pic">
+        <Pic src={fotoRodas} alt="Chiller Helioterm de gabinete claro, com logotipo e painel de comando, apoiado em rodízios junto a uma parede de blocos" sizes="(min-width: 1000px) 54vw, 120vw" widths={[640, 960, 1400]} eager />
+      </figure>
+    </section>
+
+    <section id="conversa" class="chat" aria-labelledby="chat-t">
+      <div class="wrap two">
+        <div class="chat-head">
+          <h2 id="chat-t" data-reveal>{copy.chat.title}</h2>
+          <p class="small muted">Perguntas e respostas de exemplo, no formato do WhatsApp.</p>
+        </div>
+        <ol class="plain thread">
+          {copy.chat.items.map((m, i) => (
+            <li class:list={['msg', m.from === 'visitor' ? 'me' : 'them']} data-reveal style={`--d:${i % 2}`}>
+              {m.from !== 'visitor' && <img class="av" src={avatar.src} width="1099" height="900" alt="" />}
+              <p><span class="sr-only">{m.from === 'visitor' ? 'Visitante: ' : 'Chiller Peças: '}</span>{m.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div class="wrap">
+        <div class="cta-band" data-reveal>
+          <p class="cta-lead">{copy.chat.ctaAfterLead}</p>
+          <a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="chat-end"><WaIcon />{copy.chat.ctaAfter}</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="equipamentos" class="gear" aria-labelledby="gear-t">
+      <div class="wrap">
+        <h2 id="gear-t" data-reveal>{copy.showcase.title}</h2>
+        <p class="lead" data-reveal style="--d:1">{copy.showcase.intro}</p>
+
+        <div class="block two chill">
+          <figure class="bubble-pic" data-reveal><Pic src={fotoLateral} alt="Chiller compacto Helioterm sobre o piso do galpão, visto de lado, com o painel de controle e a grade do condensador" sizes="(min-width: 900px) 40vw, 90vw" widths={[480, 720, 960, 1280]} /></figure>
+          <div>
+            <h3 class="sub" data-reveal>{copy.chillers.title}</h3>
+            <p class="lead" data-reveal style="--d:1">{copy.chillers.intro}</p>
+            <dl class="models">
+              {htc.map((m, i) => (<div data-reveal style={`--d:${i}`}><dt>{m.name}</dt><dd>{m.text}</dd></div>))}
+            </dl>
+            <ul class="bul benefits">
+              {copy.chillers.benefits.map((b) => (<li data-reveal><strong>{b.title}.</strong> {b.text}</li>))}
+            </ul>
+            <SpecTable class="specs" caption={copy.chillers.tableTitle} note={copy.chillers.tableNote} rows={['capacidade', 'cop', 'dimensoes', 'peso', 'conexoes']} />
+            <p class="after"><a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="chillers"><WaIcon />{copy.chillers.cta}</a></p>
+          </div>
+        </div>
+
+        <div class="block dehum" id="desumidificadores">
+          <h3 class="sub" data-reveal>{copy.dehumidifiers.title}</h3>
+          <p class="lead" data-reveal style="--d:1">{copy.dehumidifiers.intro}</p>
+          <div class="discs">
+            <article data-reveal>
+              <div class="disc"><Pic src={dutadoSF} alt="Render do desumidificador industrial dutado Helioterm, caixa azul-acinzentada com duas bocas de duto e display digital" sizes="(min-width: 900px) 30vw, 70vw" widths={[612]} /></div>
+              <h4>{dutado.name}</h4>
+              <p>{dutado.text}</p>
+              <p class="muted small">{copy.dehumidifiers.products.dutado.tagline}</p>
+            </article>
+            <article data-reveal style="--d:1">
+              <div class="disc"><Pic src={portatilSF} alt="Render do desumidificador industrial portátil Helioterm, gabinete preto e branco com serpentina na parte de cima" sizes="(min-width: 900px) 30vw, 70vw" widths={[500]} /></div>
+              <h4>{portatil.name}</h4>
+              <p>{portatil.text}</p>
+              <p class="muted small">{copy.dehumidifiers.products.portatil.tagline}</p>
+            </article>
+          </div>
+          <div class="line" data-reveal>
+            <h4>{copy.dehumidifiers.line.title}</h4>
+            <p>{copy.dehumidifiers.line.text}</p>
+          </div>
+          <p><a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="dehumidifiers"><WaIcon />{copy.dehumidifiers.cta}</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="aplicacoes" class="apps" aria-labelledby="ap-t">
+      <div class="wrap two">
+        <h2 id="ap-t" data-reveal>{copy.applications.title}</h2>
+        <ul class="bul big" data-reveal style="--d:1">{copy.applications.items.map((i) => <li>{i}</li>)}</ul>
+      </div>
+    </section>
+
+    <section id="por-que" class="why" aria-labelledby="why-t">
+      <div class="wrap two">
+        <div>
+          <h2 id="why-t" data-reveal>{copy.whyUs.title}</h2>
+          <p class="lead" data-reveal style="--d:1">{copy.whyUs.intro}</p>
+          <figure class="bubble-pic small-pic" data-reveal style="--d:2"><Pic src={fotoPainel} alt="Painel de controle do chiller com display do controlador, chave liga/desliga e botão de emergência" sizes="(min-width: 900px) 30vw, 70vw" widths={[480, 720]} /></figure>
+        </div>
+        <ul class="plain why-pts">
+          {copy.whyUs.points.map((p, i) => (<li data-reveal style={`--d:${i % 2}`}><h3>{p.title}</h3><p>{p.text}</p></li>))}
+        </ul>
+      </div>
+    </section>
+
+    <section id="faq" class="faq-sec" aria-labelledby="faq-t">
+      <div class="wrap two">
+        <h2 id="faq-t" data-reveal>{copy.faq.title}</h2>
+        <Faq items={copy.faq.items} mode="accordion" />
+      </div>
+    </section>
+
+    <section id="contato" class="contact" aria-labelledby="ct-t">
+      <div class="wrap two">
+        <div>
+          <h2 id="ct-t" data-reveal>{copy.form.title}</h2>
+          <p class="lead" data-reveal style="--d:1">{copy.form.intro}</p>
+        </div>
+        <div class="sheet" data-reveal style="--d:1">
+          <LeadForm
+            variant={copy.variant} id="form-v5" fields={copy.form.fields} submit={copy.form.submit}
+            success={copy.form.success} error={copy.form.error} privacyNote={copy.form.privacyNote} privacyHref={copy.form.privacyHref}
+            waMessage={copy.whatsapp.defaultMessage} class="quiet"
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter nav={copy.header.nav} footer={copy.footer} waHref={wa} waLabel={copy.header.whatsappCta} look="light" />
+  <WhatsAppFloat href={wa} label={copy.whatsapp.floatingLabel} />
+</BaseLayout>
+
+<style>
+  /* Motivo: o balão (círculo com um canto reto). Máscara das fotos, forma dos botões, marcador das listas e faixa da página. */
+  :global(.v5) { --bubble: 50% 50% 50% 6%; --bubble-r: 28px 28px 28px 4px; --bubble-me: 28px 28px 4px 28px; }
+  :global(.v5 .btn) { border-radius: var(--bubble-r); }
+  section { padding-block: var(--section); }
+  .two { display: grid; gap: 36px; align-items: start; }
+  section h2 { color: var(--azul); }
+  .lead { margin-top: 18px; }
+  .muted { color: var(--ink-soft); }
+
+  .bul { list-style: none; padding: 0; display: grid; gap: 12px; }
+  .bul li { position: relative; padding-left: 30px; }
+  .bul li::before { content: ''; position: absolute; left: 0; top: 0.42em; width: 16px; height: 16px; background: var(--azul-claro); border-radius: var(--bubble); }
+
+  /* Hero: a foto vive dentro do balão gigante, cortado pela borda da tela */
+  .hero { background: var(--cinza); position: relative; overflow: clip; display: flow-root; padding-block: clamp(36px, 5vw, 72px) 0; }
+  .hero-grid { position: relative; display: grid; gap: 28px; }
+  .hero h1 { font-size: clamp(1.5rem, 6.6vw, 3.8rem); line-height: 1.04; color: var(--azul); }
+  .hero-text { display: grid; gap: 22px; align-content: center; position: relative; z-index: 2; }
+  .hero .lead { margin: 0; max-width: 46ch; }
+  .cta-block { display: grid; gap: 10px; justify-items: start; }
+  .cta-lead { font-weight: 700; margin: 0; }
+  .trust { font-size: var(--step-small); font-weight: 700; color: var(--ink-soft); }
+  .ticks li::before { border-radius: var(--bubble); }
+  .blob { display: none; }
+  .hero-pic { margin: 8px -10vw -38vw; width: 120vw; aspect-ratio: 1; position: relative; }
+  .hero-pic::before { content: ''; position: absolute; inset: -4% 4% 4% -4%; background: var(--azul-claro); border-radius: var(--bubble); }
+  .hero-pic :global(img) { position: relative; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; border-radius: var(--bubble); }
+  @media (min-width: 1000px) {
+    .hero { min-height: min(90svh, 840px); display: grid; align-items: center; padding-block: 56px; }
+    .hero-text { width: min(100%, calc(52vw - var(--gutter))); }
+    .hero h1 { font-size: clamp(2.5rem, 4.2vw, 4.8rem); }
+    .hero-pic { position: absolute; margin: 0; width: min(54vw, 120vh); right: -8vw; top: 50%; transform: translateY(-50%); }
+    .hero-pic::before { inset: 5% 4% -5% -5%; }
+  }
+
+  /* Conversa */
+  .chat { background: var(--branco); }
+  .chat-head { display: grid; gap: 10px; }
+  .thread { display: grid; gap: 14px; background: var(--cinza-2); padding: clamp(16px, 3vw, 36px); border-radius: 28px 28px 28px 6px; }
+  .msg { display: flex; gap: 10px; align-items: flex-end; max-width: 100%; }
+  .msg p { padding: 14px 20px; max-width: min(100%, 46ch); line-height: 1.45; }
+  .msg.me { justify-content: flex-end; }
+  .msg.me p { background: var(--azul); color: var(--branco); border-radius: var(--bubble-me); }
+  .msg.them p { background: var(--branco); color: var(--ink); border-radius: var(--bubble-r); }
+  .av { flex: none; width: 34px; height: 28px; object-fit: contain; margin-bottom: 8px; }
+  .cta-band { margin-top: clamp(32px, 5vw, 56px); background: var(--azul); color: var(--branco); padding: clamp(24px, 4vw, 48px); display: grid; gap: 18px; justify-items: start; border-radius: var(--bubble-r); --focus: #fff; }
+  .cta-band .cta-lead { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.625rem, 2.4vw + 0.9rem, 3.25rem); line-height: 1.05; }
+  @media (min-width: 800px) { .cta-band { grid-template-columns: 1fr auto; align-items: center; gap: 40px; } }
+
+  /* Equipamentos */
+  .gear { background: var(--cinza); }
+  .block { margin-top: clamp(72px, 9vw, 150px); display: grid; gap: 28px; }
+  .sub { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; font-size: clamp(1.625rem, 1.6vw + 1rem, 2.5rem); line-height: 1.05; color: var(--azul); }
+  .bubble-pic { margin: 0; }
+  .bubble-pic :global(img) { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--bubble); }
+  .small-pic { margin-top: 28px; max-width: 360px; }
+  .models { display: grid; gap: 12px; margin: 24px 0; }
+  .models div { background: var(--branco); padding: 16px 20px; border-radius: var(--bubble-r); }
+  .models dt { font-family: var(--font-display); text-transform: uppercase; font-size: 1.5rem; color: var(--azul); line-height: 1.1; }
+  .models dd { margin: 2px 0 0; font-weight: 600; }
+  .benefits { margin-bottom: 24px; }
+  .specs { margin: 8px 0 0; }
+  .after { margin-top: 24px; }
+  .discs { display: grid; gap: 32px; margin-top: 28px; }
+  .disc { background: var(--branco); border-radius: var(--bubble); aspect-ratio: 1; max-width: 360px; display: grid; place-items: center; padding: 14%; margin-bottom: 16px; }
+  .disc :global(img) { max-width: 100%; max-height: 100%; width: auto; height: auto; }
+  .discs h4 { font-size: var(--step-lead); margin-bottom: 4px; }
+  .line { margin-top: 36px; background: var(--azul); color: var(--branco); padding: clamp(20px, 3vw, 36px); border-radius: var(--bubble-r); display: grid; gap: 8px; max-width: 900px; }
+  .line h4 { font-size: var(--step-lead); }
+  .block.dehum > p:last-child { margin-top: 28px; }
+
+  .apps .big { font-size: var(--step-lead); font-weight: 700; }
+  .why { background: var(--cinza); }
+  .why-pts { display: grid; gap: 24px; }
+  .why-pts h3 { color: var(--azul); margin-bottom: 4px; }
+  .faq-sec :global(.faq.acc details) { border-radius: var(--bubble-r); }
+  .faq-sec { background: var(--branco); }
+  .contact { background: var(--cinza-2); }
+  .sheet { background: var(--branco); padding: clamp(20px, 3vw, 40px); border-radius: var(--bubble-r); }
+  .sheet :global(.btn) { background: var(--azul); color: var(--branco); }
+  .sheet :global(.btn:hover) { background: var(--azul-hover); }
+  .sheet :global(.form-note a) { color: var(--azul); }
+
+  @media (min-width: 900px) {
+    .two { grid-template-columns: 5fr 7fr; gap: 72px; }
+    .chill.two { grid-template-columns: 5fr 7fr; }
+    .discs { grid-template-columns: 1fr 1fr; gap: 56px; }
+    .why-pts { grid-template-columns: 1fr 1fr; gap: 32px 40px; }
+    .apps .big { columns: 2; display: block; }
+    .apps .big li { break-inside: avoid; margin-bottom: 14px; }
+  }
+</style>

@@ -1,0 +1,322 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import WaIcon from '../components/WaIcon.astro';
+import SpecTable from '../components/SpecTable.astro';
+import Faq from '../components/Faq.astro';
+import LeadForm from '../components/LeadForm.astro';
+import Pic from '../components/Pic.astro';
+import { copy } from '../content/copy.v1';
+import { defaultWhatsappUrl } from '../lib/whatsapp';
+
+import fotoLateral from '../assets/photos/fabrica-chiller-lateral.jpg';
+import fotoVentilador from '../assets/photos/fabrica-ventilador.jpg';
+import fotoPainel from '../assets/photos/fabrica-painel.jpg';
+import fotoParede from '../assets/photos/chiller-parede.jpg';
+import fotoConexoes from '../assets/photos/chiller-conexoes.jpg';
+import dutadoSF from '../assets/renders/dutado-semfundo.png';
+import portatilSF from '../assets/renders/portatil-semfundo.png';
+
+const wa = defaultWhatsappUrl(copy);
+const models = Object.entries(copy.chillers.models);
+const products = [
+  { ...copy.dehumidifiers.products.dutado, img: dutadoSF, alt: 'Render do desumidificador industrial dutado Helioterm, caixa azul-acinzentada com duas bocas de duto e display digital' },
+  { ...copy.dehumidifiers.products.portatil, img: portatilSF, alt: 'Render do desumidificador industrial portátil Helioterm, gabinete preto e branco com serpentina na parte de cima' },
+];
+---
+<BaseLayout title={copy.meta.title} description={copy.meta.description} variant={copy.variant} bodyClass="v1">
+  <SiteHeader nav={copy.header.nav} cta={copy.header.whatsappCta} ctaHref={wa} tone="blue" sticky />
+
+  <main id="conteudo">
+    <!-- Hero: campo azul escuro, título em Anton ocupando a largura inteira -->
+    <section class="hero on-dark" aria-labelledby="h1">
+      <div class="wrap hero-grid">
+        <h1 id="h1" data-reveal>{copy.hero.headline}</h1>
+        <div class="hero-copy">
+          <p class="lead" data-reveal style="--d:1">{copy.hero.subheadline}</p>
+          <div class="actions" data-reveal style="--d:2">
+            <a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="hero"><WaIcon />{copy.hero.primaryCta}</a>
+            <a class="link-sub" href="#chillers">{copy.hero.secondaryCta}</a>
+          </div>
+          <ul class="ticks trust" data-reveal style="--d:3">
+            {copy.hero.trust.map((t) => <li>{t}</li>)}
+          </ul>
+        </div>
+        <figure class="hero-photo" data-reveal style="--d:2">
+          <Pic src={fotoLateral} alt="Chiller compacto Helioterm branco, com painel de controle e grade lateral, sobre o piso de um galpão com faixa de segurança amarela" sizes="(min-width: 1024px) 46vw, 100vw" widths={[640, 960, 1280, 1600]} eager />
+        </figure>
+      </div>
+    </section>
+
+    <div class="split">
+      <div class="col">
+        <section id="pain" class="blk pain" aria-labelledby="pain-t" data-stage="1">
+          <h2 id="pain-t" data-reveal>{copy.pain.title}</h2>
+          <p class="lead" data-reveal style="--d:1">{copy.pain.intro}</p>
+          <ul class="plain pts">
+            {copy.pain.points.map((p, i) => (
+              <li class:list={{ humid: i === 2 }} data-reveal style={`--d:${i}`}>
+                <h3>{p.title}</h3>
+                <p>{p.text}</p>
+              </li>
+            ))}
+          </ul>
+          <figure class="m-photo"><Pic src={fotoVentilador} alt="Ventilador do condensador no topo de um chiller Helioterm, com o cabo de alimentação" sizes="100vw" /></figure>
+        </section>
+
+        <section id="solution" class="blk solution" aria-labelledby="sol-t" data-stage="2">
+          <h2 id="sol-t" data-reveal>{copy.solution.title}</h2>
+          <p class="lead" data-reveal style="--d:1">{copy.solution.intro}</p>
+          <ul class="plain steps">
+            {copy.solution.steps.map((s, i) => (
+              <li data-reveal style={`--d:${i}`}>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </li>
+            ))}
+          </ul>
+          <figure class="m-photo"><Pic src={fotoPainel} alt="Painel de controle do chiller com display do controlador, chave liga/desliga e botão de emergência" sizes="100vw" /></figure>
+        </section>
+
+        <section id="chillers" class="blk chillers" aria-labelledby="ch-t" data-stage="3">
+          <h2 id="ch-t" data-reveal>{copy.chillers.title}</h2>
+          <p class="lead" data-reveal style="--d:1">{copy.chillers.intro}</p>
+          <dl class="models" data-reveal>
+            {models.map(([name, m]) => (<div><dt>{name}</dt><dd>{m.tagline}</dd></div>))}
+          </dl>
+          <ul class="plain benefits">
+            {copy.chillers.benefits.map((b, i) => (
+              <li data-reveal style={`--d:${i % 2}`}><h3>{b.title}</h3><p>{b.text}</p></li>
+            ))}
+          </ul>
+          <SpecTable caption={copy.chillers.tableTitle} note={copy.chillers.tableNote} />
+          <p class="cta-row"><a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="chillers"><WaIcon />{copy.chillers.cta}</a></p>
+          <figure class="m-photo"><Pic src={fotoParede} alt="Chiller Helioterm com logotipo no painel frontal, apoiado em rodízios junto a uma parede de blocos" sizes="100vw" /></figure>
+        </section>
+
+        <section id="aplicacoes" class="blk apps" aria-labelledby="ap-t" data-stage="4">
+          <h2 id="ap-t" data-reveal>{copy.applications.title}</h2>
+          <ul class="ticks apps-list" data-reveal style="--d:1">
+            {copy.applications.items.map((i) => <li>{i}</li>)}
+          </ul>
+          <figure class="m-photo"><Pic src={fotoConexoes} alt="Lateral de um chiller Helioterm com as conexões hidráulicas de entrada e saída" sizes="100vw" /></figure>
+        </section>
+
+        <section id="desumidificadores" class="blk dehum" aria-labelledby="dh-t" data-stage="5">
+          <h2 id="dh-t" data-reveal>{copy.dehumidifiers.title}</h2>
+          <p class="lead" data-reveal style="--d:1">{copy.dehumidifiers.intro}</p>
+          <div class="prods">
+            {products.map((p, i) => (
+              <article data-reveal style={`--d:${i}`}>
+                <div class="tile"><Pic src={p.img} alt={p.alt} sizes="(min-width: 1024px) 22vw, 70vw" widths={[320, 480, 612]} /></div>
+                <h3>{p.name}</h3>
+                <p>{p.tagline}</p>
+                <ul class="ticks">{p.bullets.map((b) => <li>{b}</li>)}</ul>
+              </article>
+            ))}
+          </div>
+          <div class="line" data-reveal>
+            <h3>{copy.dehumidifiers.line.title}</h3>
+            <p>{copy.dehumidifiers.line.text}</p>
+          </div>
+          <p class="cta-row"><a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="dehumidifiers"><WaIcon />{copy.dehumidifiers.cta}</a></p>
+        </section>
+      </div>
+
+      <!-- Palco fixo: a foto fica e muda com a seção (só desktop) -->
+      <aside class="stage" aria-label="Fotos dos equipamentos">
+        <div class="frame">
+          <div class="shot on" data-for="1"><Pic src={fotoVentilador} alt="Ventilador do condensador no topo de um chiller Helioterm" sizes="48vw" widths={[800, 1200, 1600]} /></div>
+          <div class="shot" data-for="2"><Pic src={fotoPainel} alt="Painel de controle do chiller com controlador, chave liga/desliga e botão de emergência" sizes="48vw" widths={[800, 1200, 1600]} /></div>
+          <div class="shot" data-for="3"><Pic src={fotoParede} alt="Chiller Helioterm com logotipo no painel, em rodízios, junto a uma parede" sizes="48vw" widths={[800, 1200, 1600]} /></div>
+          <div class="shot" data-for="4"><Pic src={fotoConexoes} alt="Lateral do chiller Helioterm com as conexões hidráulicas" sizes="48vw" widths={[800, 1200, 1600]} /></div>
+          <div class="shot light" data-for="5">
+            <Pic src={dutadoSF} alt="Render do desumidificador industrial dutado Helioterm" sizes="40vw" widths={[612]} />
+            <Pic src={portatilSF} alt="Render do desumidificador industrial portátil Helioterm" sizes="40vw" widths={[500]} />
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <section id="dimensionamento" class="sizing on-dark" aria-labelledby="sz-t">
+      <div class="wrap sz-grid">
+        <div>
+          <h2 id="sz-t" data-reveal>{copy.sizing.title}</h2>
+          <p class="lead" data-reveal style="--d:1">{copy.sizing.intro}</p>
+        </div>
+        <div>
+          <ul class="ticks sz-list" data-reveal>{copy.sizing.inputs.map((i) => <li>{i}</li>)}</ul>
+          <p class="note" data-reveal>{copy.sizing.note}</p>
+          <p class="cta-row" data-reveal><a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="sizing"><WaIcon />{copy.sizing.cta}</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="por-que" class="why" aria-labelledby="why-t">
+      <div class="wrap why-grid">
+        <div>
+          <h2 id="why-t" data-reveal>{copy.whyUs.title}</h2>
+          <p class="lead" data-reveal style="--d:1">{copy.whyUs.intro}</p>
+        </div>
+        <ul class="plain why-pts">
+          {copy.whyUs.points.map((p, i) => (
+            <li data-reveal style={`--d:${i % 3}`}><h3>{p.title}</h3><p>{p.text}</p></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section id="faq" class="faq-sec" aria-labelledby="faq-t">
+      <div class="wrap faq-grid">
+        <h2 id="faq-t" data-reveal>{copy.faq.title}</h2>
+        <Faq items={copy.faq.items} mode="run-in" class="cols" />
+      </div>
+    </section>
+
+    <section id="contato" class="contact on-dark" aria-labelledby="ct-t">
+      <div class="wrap ct-grid">
+        <h2 id="ct-t" data-reveal>{copy.form.title}</h2>
+        <div>
+          <p class="lead" data-reveal style="--d:1">{copy.form.intro}</p>
+          <p data-reveal style="--d:2"><a class="link-sub" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="form">{copy.header.whatsappCta}</a></p>
+        </div>
+        <div class="sheet" data-reveal style="--d:1">
+          <LeadForm
+            variant={copy.variant} id="form-v1" fields={copy.form.fields} submit={copy.form.submit}
+            success={copy.form.success} error={copy.form.error} privacyNote={copy.form.privacyNote} privacyHref={copy.form.privacyHref}
+            waMessage={copy.whatsapp.defaultMessage}
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <SiteFooter nav={copy.header.nav} footer={copy.footer} waHref={wa} waLabel={copy.header.whatsappCta} look="ink" />
+  <WhatsAppFloat href={wa} label={copy.whatsapp.floatingLabel} />
+
+  <script>
+    const shots = Array.from(document.querySelectorAll<HTMLElement>('.stage .shot'));
+    const secs = Array.from(document.querySelectorAll<HTMLElement>('[data-stage]'));
+    if (shots.length && secs.length && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const show = (n: string) => shots.forEach((s) => s.classList.toggle('on', s.dataset.for === n));
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) show((e.target as HTMLElement).dataset.stage ?? '0'); });
+      }, { rootMargin: '-45% 0px -45% 0px' });
+      secs.forEach((s) => io.observe(s));
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  .v1 { --bg: var(--branco); }
+  /* Hero */
+  .hero { background: var(--azul); padding-block: clamp(40px, 6vw, 88px) clamp(48px, 6vw, 96px); }
+  .hero-grid { display: grid; gap: 28px; }
+  .hero h1 { font-size: clamp(1.75rem, 5vw, 5.4rem); line-height: 1.02; }
+  .hero-copy { display: grid; gap: 24px; align-content: start; }
+  .hero-copy .lead { color: var(--branco); max-width: 46ch; }
+  .actions { display: grid; gap: 4px; justify-items: start; }
+  .trust { color: var(--azul-pale); font-size: var(--step-small); font-weight: 700; }
+  .hero-photo { background: var(--azul-hover); }
+  .hero-photo :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: 60% 50%; }
+  @media (min-width: 1024px) {
+    .hero-grid { grid-template-columns: 1fr 1fr; gap: 40px 56px; align-items: start; }
+    .hero h1 { grid-column: 1 / -1; max-width: none; }
+    .hero-grid { grid-template-columns: 1fr 1fr; }
+    .hero-photo { grid-column: 1; grid-row: 2; }
+    .hero-photo :global(img) { aspect-ratio: 16 / 11; object-position: 50% 50%; }
+    .hero-copy { grid-column: 2; grid-row: 2; }
+  }
+
+  /* Split */
+  .split { display: block; }
+  .col { min-width: 0; }
+  .blk { padding: clamp(56px, 7vw, 112px) var(--gutter); display: grid; gap: 28px; align-content: start; }
+  .blk h2 { color: var(--azul); }
+  .m-photo { margin-inline: calc(var(--gutter) * -1); margin-bottom: calc(clamp(56px, 7vw, 112px) * -1); }
+  .m-photo :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .stage { display: none; }
+
+  .pain { background: var(--branco); }
+  .pts { display: grid; gap: 32px; }
+  .pts h3 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; font-size: 1.75rem; line-height: 1.1; color: var(--azul); margin-bottom: 8px; letter-spacing: 0.005em; }
+  .pts .humid { background: var(--cinza); padding: 24px; }
+  .solution { background: var(--azul-claro); color: var(--ink-deep); }
+  .solution h2 { color: var(--ink-deep); }
+  .steps { display: grid; gap: 28px; }
+  .steps h3 { margin-bottom: 6px; }
+  .chillers { background: var(--branco); }
+  .models { display: grid; gap: 12px; }
+  .models div { display: grid; gap: 2px; }
+  .models dt { font-family: var(--font-display); font-size: 1.75rem; text-transform: uppercase; color: var(--azul); line-height: 1.1; }
+  .models dd { margin: 0; font-weight: 600; }
+  .benefits { display: grid; gap: 22px; }
+  .benefits h3 { margin-bottom: 4px; }
+  .cta-row { margin-top: 4px; }
+  .apps { background: var(--cinza); }
+  .apps-list { column-gap: 32px; }
+  .apps-list li { break-inside: avoid; margin-bottom: 10px; }
+  .dehum { background: var(--branco); }
+  .prods { display: grid; gap: 28px; }
+  .prods .tile { background: var(--cinza); padding: 20px; margin-bottom: 14px; }
+  .prods .tile :global(img) { width: 100%; max-height: 220px; object-fit: contain; }
+  .prods h3 { margin-bottom: 4px; }
+  .prods p { margin-bottom: 10px; }
+  .line { background: var(--azul); color: var(--branco); padding: 24px; display: grid; gap: 8px; max-width: 640px; }
+  
+
+  @media (min-width: 1024px) {
+    .split { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); }
+    .blk { padding-inline: clamp(32px, 4vw, 72px); }
+    .m-photo { display: none; }
+    .stage { display: block; position: sticky; top: 72px; height: calc(100svh - 72px); align-self: start; background: var(--ink-deep); overflow: hidden; }
+    .stage .frame { position: relative; height: 100%; }
+    .shot { position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s var(--ease); background: var(--ink-deep); }
+    .shot.on { opacity: 1; }
+    .shot :global(img) { width: 100%; height: 100%; object-fit: cover; }
+    .shot.light { background: var(--cinza); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6%; gap: 5%; }
+    .shot.light :global(img) { width: auto; max-width: 100%; height: 100%; object-fit: contain }
+    .prods { grid-template-columns: 1fr 1fr; }
+    .apps-list { columns: 2; }
+    .models { grid-template-columns: repeat(3, 1fr); }
+    .models div { align-content: start; }
+  }
+  @media (prefers-reduced-motion: reduce) { .shot { transition: none; } }
+
+  /* Faixas de largura total */
+  .sizing { background: var(--ink-deep); padding-block: var(--section); }
+  .sz-grid { display: grid; gap: 40px; }
+  .sizing h2 { color: var(--branco); }
+  .sizing .lead { margin-top: 20px; }
+  .sz-list { gap: 12px; }
+  .note { margin: 24px 0; color: var(--azul-pale); max-width: 56ch; }
+  @media (min-width: 900px) { .sz-grid { grid-template-columns: 5fr 7fr; gap: 80px; } .sz-list { columns: 2; display: block; } .sz-list li { break-inside: avoid; margin-bottom: 14px; } }
+
+  .why { background: var(--cinza); padding-block: var(--section); }
+  .why-grid { display: grid; gap: 40px; }
+  .why h2 { color: var(--azul); }
+  .why .lead { margin-top: 20px; }
+  .why-pts { display: grid; gap: 28px; }
+  .why-pts h3 { margin-bottom: 4px; color: var(--azul); }
+  @media (min-width: 900px) { .why-grid { grid-template-columns: 5fr 7fr; gap: 80px; } .why-pts { grid-template-columns: 1fr 1fr; gap: 36px 40px; } }
+
+  .faq-sec { padding-block: var(--section); }
+  .faq-grid { display: grid; gap: 32px; }
+  .faq-sec h2 { color: var(--azul); }
+  @media (min-width: 900px) {
+    .faq-grid { grid-template-columns: 4fr 8fr; gap: 80px; }
+    .faq-sec :global(.faq.cols) { columns: 2; column-gap: 56px; display: block; }
+    .faq-sec :global(.faq.cols p) { break-inside: avoid; margin-bottom: 22px; }
+  }
+
+  .contact { background: var(--azul); padding-block: var(--section); }
+  .ct-grid { display: grid; gap: 40px; align-items: start; }
+  .contact .lead { margin: 0 0 12px; }
+
+  .sheet { background: var(--branco); color: var(--ink); padding: clamp(20px, 3vw, 40px); --focus: var(--azul); }
+  .sheet :global(.form-note) { color: var(--ink-soft); }
+  .sheet :global(.form-note a) { color: var(--azul); }
+  @media (min-width: 900px) { .ct-grid { grid-template-columns: 5fr 7fr; gap: 48px 80px; } .contact h2 { grid-column: 1 / -1; } }
+</style>

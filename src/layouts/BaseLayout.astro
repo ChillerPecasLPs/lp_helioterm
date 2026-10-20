@@ -1,0 +1,51 @@
+---
+import '@fontsource/anton/latin-400.css';
+import '@fontsource-variable/quicksand/wght.css';
+import '../styles/global.css';
+import antonWoff2 from '@fontsource/anton/files/anton-latin-400-normal.woff2?url';
+import quicksandWoff2 from '@fontsource-variable/quicksand/files/quicksand-latin-wght-normal.woff2?url';
+import { INDEXABLE, SITE_LANG } from '../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  variant?: string;
+  /** Classe no <body> para o estilo da variante */
+  bodyClass?: string;
+  /** Página interna: sempre noindex, mesmo com INDEXABLE = true */
+  internal?: boolean;
+}
+const { title, description, variant, bodyClass, internal = false } = Astro.props;
+---
+<!doctype html>
+<html lang={SITE_LANG}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {(!INDEXABLE || internal) && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#085ba7" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href={antonWoff2} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={quicksandWoff2} as="font" type="font/woff2" crossorigin />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body class={bodyClass} data-variant={variant} id="top">
+    <a class="skip" href="#conteudo">Ir para o conteúdo</a>
+    <slot />
+    <script is:inline>
+      (function () {
+        var els = document.querySelectorAll('[data-reveal]');
+        if (!els.length) return;
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce || !('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('is-in'); }); return; }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+        els.forEach(function (e) { io.observe(e); });
+        setTimeout(function () { els.forEach(function (e) { e.classList.add('is-in'); }); }, 6000);
+      })();
+    </script>
+  </body>
+</html>

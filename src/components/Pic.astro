@@ -1,0 +1,36 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  sizes?: string;
+  widths?: number[];
+  class?: string;
+  eager?: boolean;
+  /** Largura de referência para os atributos width/height (evita salto de layout). */
+  width?: number;
+  style?: string;
+  decorative?: boolean;
+}
+const { src, alt, sizes = '100vw', widths = [480, 800, 1200, 1600], class: cls, eager = false, width, style, decorative = false } = Astro.props;
+const ref = width ?? Math.min(src.width, 1200);
+const height = Math.round((ref * src.height) / src.width);
+const usable = widths.filter((w) => w <= src.width);
+---
+<Image
+  src={src}
+  alt={decorative ? '' : alt}
+  width={ref}
+  height={height}
+  widths={usable.length ? usable : [src.width]}
+  sizes={sizes}
+  format="webp"
+  quality={78}
+  loading={eager ? 'eager' : 'lazy'}
+  fetchpriority={eager ? 'high' : 'auto'}
+  decoding={eager ? 'sync' : 'async'}
+  class={cls}
+  style={style}
+/>
