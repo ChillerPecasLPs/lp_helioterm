@@ -13,14 +13,14 @@ node scripts/verify-dist.mjs   # confere o HTML gerado (noindex, h1, tabela HTC 
 node scripts/contrast.mjs      # confere contrastes (único par que falha, documentado: laranja do botão sobre branco, 3:1 como elemento)
 ```
 
-Rotas: `/v1` a `/v5` (modelos), `/` (comparação interna), `/privacidade`.
+Rotas: `/v1` a `/v5` (modelos) e `/` (comparação interna). O formulário aponta para a política de privacidade do site da Chiller Peças (https://www.chillerpecas.com.br/politica-de-privacidade).
 
 ## O que mudar em `src/config/site.ts`
 
 - `WHATSAPP_NUMBER`: só dígitos com DDI e DDD (hoje `5511940518767`).
-- `EMAIL`, `PHONE`, `ADDRESS`: aparecem no rodapé e na política de privacidade (o que estiver vazio não aparece).
+- `EMAIL`, `PHONE`, `ADDRESS`: aparecem no rodapé (o que estiver vazio não aparece).
 - `FORM_ENDPOINT`: vem da variável `PUBLIC_FORM_ENDPOINT` (ver abaixo).
-- `INDEXABLE`: `false` coloca `noindex` em todas as páginas. Mude para `true` só no lançamento (`/` e `/privacidade` continuam noindex).
+- `INDEXABLE`: `false` coloca `noindex` em todas as páginas. Mude para `true` só no lançamento (`/` continua noindex).
 
 Textos de cada modelo: `src/content/copy.v1.ts` a `copy.v5.ts`. Tabela do chiller HTC: `src/data/chillers-htc.json` (o build confere os números).
 
@@ -72,13 +72,11 @@ Compare o número de contatos por variante com o número de visitas de cada uma 
 
 - Especificações do desumidificador dutado e do portátil (a copy não afirma números).
 - Endpoint do formulário (`PUBLIC_FORM_ENDPOINT`) e o serviço que o recebe.
-- Revisão jurídica da política de privacidade (`src/pages/privacidade.astro`): compartilhamento e retenção ainda estão genéricos; base legal e serviço que recebe o formulário também. Obrigatória se `PUBLIC_FORM_ENDPOINT` for preenchido.
 - Confirmar os itens de `claimsToConfirm` em cada `src/content/copy*.ts` (prazos, frete, dimensionamento sem custo, números de eficiência etc.).
 - Autorização de uso dos renders e das fotos.
 - Ativar `INDEXABLE = true` no lançamento.
 - Definir `site` em `astro.config.mjs` (URL canônica).
 - Criar página 404, `robots.txt` e Open Graph (imagem de prévia para o WhatsApp).
-- Trocar o destino do "Voltar" de `/privacidade`: hoje, sem histórico do mesmo site, cai em `/` (a comparação interna). Apontar para a variante que for ao ar.
 
 ## Publicar
 

@@ -328,7 +328,7 @@ export const copy = {
     "success": "Recebemos seus dados. A Chiller Peças entra em contato em breve.",
     "error": "Não foi possível enviar agora. Tente de novo ou chame a gente no WhatsApp.",
     "privacyNote": "Usamos seus dados só para responder a este pedido. Veja a política de privacidade.",
-    "privacyHref": "/privacidade"
+    "privacyHref": "https://www.chillerpecas.com.br/politica-de-privacidade"
   },
   "whatsapp": {
     "defaultMessage": "Olá, vim pela página da Chiller Peças (ref. v3) e quero ver o equipamento certo para o meu caso.",
@@ -360,7 +360,6 @@ export const copy = {
     "Prazo de entrega por região. A CONFIRMAR",
     "Condições comerciais e faturamento. A CONFIRMAR",
     "Número e link do WhatsApp comercial.",
-    "Página de privacidade (/privacidade): ainda não existe.",
     "CNPJ, razão social e endereço (saíram do rodapé; incluir quando confirmados).",
     "Oferta de catálogo, manual e termo de garantia pela Chiller Peças.",
     "Fotos dos equipamentos e confirmação do uso dos renders.",

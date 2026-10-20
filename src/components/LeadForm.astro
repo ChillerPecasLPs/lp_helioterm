@@ -85,7 +85,7 @@ const [noteHead, noteTail] = privacyNote ? privacyNote.split('política de priva
   <p class="form-status" role="status" aria-live="polite" data-form-status="whatsapp" hidden><span data-wa-text></span> <a class="link-sub" href={whatsappUrl(undefined, WHATSAPP_NUMBER)} target="_blank" rel="noopener"></a></p>
   <noscript><p class="form-note">O envio do formulário precisa de JavaScript. Fale com a gente pelo <a href={whatsappUrl(undefined, WHATSAPP_NUMBER)}>WhatsApp</a>{EMAIL ? <> ou por <a href={`mailto:${EMAIL}`}>{EMAIL}</a></> : null}.</p></noscript>
   {privacyNote && (
-    <p class="form-note">{noteHead}<a href={privacyHref}>política de privacidade</a>{noteTail}</p>
+    <p class="form-note">{noteHead}<a href={privacyHref} target="_blank" rel="noopener noreferrer">política de privacidade<span class="sr-only"> (abre em nova aba)</span></a>{noteTail}</p>
   )}
 </form>
 
