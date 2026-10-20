@@ -10,8 +10,7 @@ export const SLOGAN = 'Peça com agilidade. Chiller Peças.';
 export const WHATSAPP_NUMBER = '5511940518767';
 
 /** Contatos da Chiller Peças informados pelo cliente (o rodapé só exibe o que estiver preenchido). */
-// CONFIRMAR: o domínio foi enviado como "chilerpecas.com" (um L); o domínio da empresa parece ser "chillerpecas.com".
-export const EMAIL: string = 'vendas@chilerpecas.com';
+export const EMAIL: string = 'vendas@chillerpecas.com';
 export const PHONE: string = '';
 // PENDENTE: cidade, estado e CEP.
 export const ADDRESS: string = 'Rua Antônio de Barros, 1093';
