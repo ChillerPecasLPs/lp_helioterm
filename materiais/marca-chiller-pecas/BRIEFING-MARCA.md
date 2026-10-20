@@ -51,9 +51,20 @@ Transmitir confiança, profissionalismo e proximidade. Comunicação clara, huma
 - Tabarra e Porcelain constam no manual como apoio (Tabarra para destaques, Porcelain manuscrita para toques pontuais); uso secundário.
 
 ## Logotipo
-- Versão primária horizontal com slogan, versão vertical (empilhada) e ícone isolado (para espaço reduzido).
-- Variantes azul sobre fundo claro e branca sobre fundo azul (`01-capa`, `03-nome-da-marca`, `11-logotipos`).
-- **Não há arquivo de logo vetorial ou PNG transparente nesta pasta**, só os slides. Para a LP precisamos de SVG/PNG transparente (horizontal, vertical, ícone, versão branca).
+Arquivos SVG oficiais em `logos/` (revisados: sem script nem link externo):
+
+| Arquivo | O que é | Uso |
+|---|---|---|
+| `UB_LOGO_CB.svg` | Logo vertical (empilhado) colorido: "hiller" em azul `#085ba7` e "Peças" em `#108bd1` | Fundo claro (header estreito, rodapé claro, assinatura) |
+| `TXT_LOGOW.svg` | Logo horizontal branco ("Chiller Peças") | Fundo azul ou escuro (header e rodapé sobre azul) |
+| `C_LOGO_A.svg` | Ícone em azul claro `#108bd1` | Fundo claro, selos, favicon |
+| `C_LOGO_DB.svg` | Ícone em azul escuro `#085ba7` | Fundo claro, ênfase |
+| `C_LOGO_W.svg` | Ícone branco | Fundo azul ou escuro |
+| `C_LOGO_B.svg` | Ícone preto | Impressão em uma cor |
+
+- Falta o **logo horizontal colorido** (azul, com slogan "Peça com agilidade. Chiller Peças.") que aparece no slide `11-logotipos.jpg`. Para fundo claro usar o vertical `UB_LOGO_CB.svg` até o arquivo chegar; não recolorir o branco por conta própria.
+- Regras do manual: versão primária para identidade forte; horizontal ou vertical para espaços flexíveis (assinaturas, cabeçalhos, rodapés, layouts estreitos); ícone isolado só quando o espaço é extremamente limitado (redes sociais, aplicativos, padronagens, sinalização reduzida, materiais promocionais).
+- Os SVGs têm `width/height="100%"`: ao usar no HTML, definir a altura por CSS.
 
 ## Moodboard
 Cobre polido (tubos e serpentinas), azul metálico, cristal de gelo/floco de neve, lobo branco de olhos azuis (frio, atenção), caminhão azul (entrega nacional), azul saturado e brilhante. Direção: frio técnico, azul saturado com cobre/laranja como calor de contraste, materiais reais.
