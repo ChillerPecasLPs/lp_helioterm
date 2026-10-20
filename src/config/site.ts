@@ -12,8 +12,7 @@ export const WHATSAPP_NUMBER = '5511940518767';
 /** Contatos da Chiller Peças informados pelo cliente (o rodapé só exibe o que estiver preenchido). */
 export const EMAIL: string = 'vendas@chillerpecas.com';
 export const PHONE: string = '';
-// PENDENTE: cidade, estado e CEP.
-export const ADDRESS: string = 'Rua Antônio de Barros, 1093';
+export const ADDRESS: string = 'R. Antônio de Barros, 1093, Tatuapé, São Paulo - SP, 03401-000';
 
 /** Endpoint do formulário (variável PUBLIC_FORM_ENDPOINT). Vazio = o agente 5 aplica o fallback pelo WhatsApp. */
 export const FORM_ENDPOINT: string = import.meta.env.PUBLIC_FORM_ENDPOINT ?? '';
