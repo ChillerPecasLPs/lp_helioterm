@@ -62,7 +62,18 @@ Arquivos SVG oficiais em `logos/` (revisados: sem script nem link externo):
 | `C_LOGO_W.svg` | Ícone branco | Fundo azul ou escuro |
 | `C_LOGO_B.svg` | Ícone preto | Impressão em uma cor |
 
-- Falta o **logo horizontal colorido** (azul, com slogan "Peça com agilidade. Chiller Peças.") que aparece no slide `11-logotipos.jpg`. Para fundo claro usar o vertical `UB_LOGO_CB.svg` até o arquivo chegar; não recolorir o branco por conta própria.
+Logos horizontais em WebP com fundo transparente (2000 px de largura), também em `logos/`:
+
+| Arquivo | Altura | Uso |
+|---|---|---|
+| `horizontal-colorido.webp` | 303 px | Versão primária sem slogan: "hiller" azul `#085ba7`, "Peças" azul `#108bd1`. Fundo claro (header). |
+| `horizontal-slogan-colorido.webp` | 454 px | Primária com slogan "Peça com agilidade. Chiller Peças." (rodapé, hero, fechamento). |
+| `horizontal-azul-escuro.webp`, `horizontal-slogan-azul-escuro.webp` | 303 / 454 px | Monocromática `#085ba7`. |
+| `horizontal-azul-claro.webp`, `horizontal-slogan-azul-claro.webp` | 303 / 454 px | Monocromática `#108bd1`. |
+| `horizontal-preto.webp`, `horizontal-slogan-preto.webp` | 303 / 454 px | Uma cor (impressão). |
+
+- Sobre fundo azul ou escuro usar `TXT_LOGOW.svg` (horizontal branco, vetorial, sem slogan). Não há versão branca com slogan.
+- Preferir o SVG vertical e o ícone quando a vetorização importar; os WebP são raster (2000 px), suficientes para web.
 - Regras do manual: versão primária para identidade forte; horizontal ou vertical para espaços flexíveis (assinaturas, cabeçalhos, rodapés, layouts estreitos); ícone isolado só quando o espaço é extremamente limitado (redes sociais, aplicativos, padronagens, sinalização reduzida, materiais promocionais).
 - Os SVGs têm `width/height="100%"`: ao usar no HTML, definir a altura por CSS.
 
