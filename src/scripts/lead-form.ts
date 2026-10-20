@@ -25,9 +25,10 @@ const LABEL: Record<Key, string> = {
 
 /** Remove DDI 55, zero de operadora e formatação. Devolve só dígitos ou '' se não for um telefone brasileiro válido. */
 export function normalizePhone(raw: string): string {
+  if (/\(\s*0\d\s*\)/.test(raw)) return ''; // "(01)": DDD de um dígito, não é zero de operadora + DDD
   let d = raw.replace(/\D/g, '');
   if ((d.length === 12 || d.length === 13) && d.startsWith('55')) d = d.slice(2);
-  else if (d.length === 12 && d.startsWith('0')) d = d.slice(1);
+  else if (d.startsWith('0') && (d.length === 11 || d.length === 12)) d = d.slice(1);
   if (d.length !== 10 && d.length !== 11) return '';
   if (!/^[1-9][1-9]/.test(d)) return '';
   if (d.length === 11 && d[2] !== '9') return '';
@@ -201,6 +202,9 @@ function init(form: HTMLFormElement) {
       return;
     }
     // Sem endpoint: abre o WhatsApp a partir do gesto do usuário (evita bloqueio de pop-up)
+    // Trava duplo clique/Enter repetido (1 aba, 1 evento); o aria-disabled do botão acompanha
+    setBusy(true);
+    setTimeout(() => setBusy(false), 2000);
     const url = waUrl(buildMessage(data));
     const opened = openWhatsApp(url);
     showWhatsApp(

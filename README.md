@@ -52,7 +52,9 @@ Exemplo do JSON enviado (campos vazios são omitidos; telefone normalizado só c
 
 Não enviamos IP, user agent nem cookies. O destino precisa responder 2xx e liberar CORS para o domínio da página (`Access-Control-Allow-Origin`, `Access-Control-Allow-Headers: content-type, accept`, resposta ao `OPTIONS`).
 
-Exemplos de destino (todos aceitam POST JSON): Formspree (`https://formspree.io/f/<id>`), Make/Zapier/n8n (webhook), Google Apps Script publicado como web app que grava numa planilha e/ou manda e-mail, ou uma função serverless própria (por exemplo na Vercel) que encaminhe para o CRM. Confirme o CORS de cada um antes de publicar.
+Exemplos de destino que aceitam `POST` com corpo JSON: Formspree (`https://formspree.io/f/<id>`), webhooks do Make, Zapier ou n8n, ou uma função serverless própria (por exemplo na Vercel) que valide e encaminhe para o CRM. O navegador envia `Content-Type: application/json`, o que dispara um preflight `OPTIONS`: **confirme o CORS do endpoint para o domínio da página**. Google Apps Script não responde ao preflight e não serve direto (exigiria corpo `text/plain`, que este formulário não usa).
+
+O endpoint fica visível no HTML e no JS da página. Um webhook aberto (Make, Zapier) aceita spam de qualquer pessoa, e o honeypot é a única barreira no navegador. Prefira um endpoint com validação e limite de taxa.
 
 O honeypot (`hp_url`) é um campo oculto fora da tela: se vier preenchido, o envio é descartado em silêncio.
 
@@ -70,10 +72,13 @@ Compare o número de contatos por variante com o número de visitas de cada uma 
 
 - Especificações do desumidificador dutado e do portátil (a copy não afirma números).
 - Endpoint do formulário (`PUBLIC_FORM_ENDPOINT`) e o serviço que o recebe.
-- Revisão jurídica da política de privacidade (`src/pages/privacidade.astro`): base legal, retenção, operador/serviço que recebe o formulário.
+- Revisão jurídica da política de privacidade (`src/pages/privacidade.astro`): compartilhamento e retenção ainda estão genéricos; base legal e serviço que recebe o formulário também. Obrigatória se `PUBLIC_FORM_ENDPOINT` for preenchido.
 - Confirmar os itens de `claimsToConfirm` em cada `src/content/copy*.ts` (prazos, frete, dimensionamento sem custo, números de eficiência etc.).
 - Autorização de uso dos renders e das fotos.
-- Ativar `INDEXABLE = true` no lançamento e definir `site` em `astro.config.mjs` com o domínio.
+- Ativar `INDEXABLE = true` no lançamento.
+- Definir `site` em `astro.config.mjs` (URL canônica).
+- Criar página 404, `robots.txt` e Open Graph (imagem de prévia para o WhatsApp).
+- Trocar o destino do "Voltar" de `/privacidade`: hoje, sem histórico do mesmo site, cai em `/` (a comparação interna). Apontar para a variante que for ao ar.
 
 ## Publicar
 

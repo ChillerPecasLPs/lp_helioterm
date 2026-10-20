@@ -3,10 +3,11 @@
 // 3) números da tabela HTC (03/05/09 AR) iguais aos de src/data/chillers-htc.json; 4) alt e h1.
 import fs from 'node:fs';
 import path from 'node:path';
-const dist = new URL('../dist/', import.meta.url).pathname;
+import { fileURLToPath } from 'node:url';
+const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 const files = fs.readdirSync(dist, { recursive: true }).filter((f) => String(f).endsWith('.html')).map((f) => path.join(dist, String(f)));
 const html = Object.fromEntries(files.map((f) => [path.relative(dist, f), fs.readFileSync(f, 'utf8')]));
-const json = JSON.parse(fs.readFileSync(new URL('../src/data/chillers-htc.json', import.meta.url), 'utf8'));
+const json = JSON.parse(fs.readFileSync(fileURLToPath(new URL('../src/data/chillers-htc.json', import.meta.url)), 'utf8'));
 const nf = new Intl.NumberFormat('pt-BR');
 let fails = 0;
 const bad = (m) => { fails++; console.log('FALHA', m); };

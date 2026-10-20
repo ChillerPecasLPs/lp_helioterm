@@ -49,7 +49,7 @@ const products = [
           <h2 class="card-title">{copy.heroForm.title}</h2>
           <LeadForm
             variant={copy.variant} id="form-hero-v2" fields={copy.heroForm.fields} submit={copy.heroForm.submit}
-            success={copy.form.success} error={copy.form.error}
+            success={copy.form.success} error={copy.form.error} privacyNote={copy.form.privacyNote} privacyHref={copy.form.privacyHref}
             order={['name', 'company', 'phone', 'application']} waMessage={copy.whatsapp.defaultMessage}
           />
           <p class="form-note">{copy.heroForm.note}</p>
