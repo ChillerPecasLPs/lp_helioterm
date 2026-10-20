@@ -37,7 +37,7 @@ const products = [
         <div class="hero-copy">
           <p class="lead" data-reveal style="--d:1">{copy.hero.subheadline}</p>
           <div class="actions" data-reveal style="--d:2">
-            <a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="hero"><WaIcon />{copy.hero.primaryCta}</a>
+            <a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="hero"><WaIcon />{copy.hero.primaryCta}<span class="sr-only"> (abre em nova aba)</span></a>
             <a class="link-sub" href="#chillers">{copy.hero.secondaryCta}</a>
           </div>
           <ul class="ticks trust" data-reveal style="--d:3">
@@ -92,7 +92,7 @@ const products = [
             ))}
           </ul>
           <SpecTable caption={copy.chillers.tableTitle} note={copy.chillers.tableNote} />
-          <p class="cta-row"><a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="chillers"><WaIcon />{copy.chillers.cta}</a></p>
+          <p class="cta-row"><a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="chillers"><WaIcon />{copy.chillers.cta}<span class="sr-only"> (abre em nova aba)</span></a></p>
           <figure class="m-photo"><Pic src={fotoParede} alt="Chiller Helioterm com logotipo no painel frontal, apoiado em rodízios junto a uma parede de blocos" sizes="100vw" /></figure>
         </section>
 
@@ -121,12 +121,12 @@ const products = [
             <h3>{copy.dehumidifiers.line.title}</h3>
             <p>{copy.dehumidifiers.line.text}</p>
           </div>
-          <p class="cta-row"><a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="dehumidifiers"><WaIcon />{copy.dehumidifiers.cta}</a></p>
+          <p class="cta-row"><a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="dehumidifiers"><WaIcon />{copy.dehumidifiers.cta}<span class="sr-only"> (abre em nova aba)</span></a></p>
         </section>
       </div>
 
       <!-- Palco fixo: a foto fica e muda com a seção (só desktop) -->
-      <aside class="stage" aria-label="Fotos dos equipamentos">
+      <aside class="stage" aria-hidden="true">
         <div class="frame">
           <div class="shot on" data-for="1"><Pic src={fotoVentilador} alt="Ventilador do condensador no topo de um chiller Helioterm" sizes="48vw" widths={[800, 1200, 1600]} /></div>
           <div class="shot" data-for="2"><Pic src={fotoPainel} alt="Painel de controle do chiller com controlador, chave liga/desliga e botão de emergência" sizes="48vw" widths={[800, 1200, 1600]} /></div>
@@ -149,7 +149,7 @@ const products = [
         <div>
           <ul class="ticks sz-list" data-reveal>{copy.sizing.inputs.map((i) => <li>{i}</li>)}</ul>
           <p class="note" data-reveal>{copy.sizing.note}</p>
-          <p class="cta-row" data-reveal><a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="sizing"><WaIcon />{copy.sizing.cta}</a></p>
+          <p class="cta-row" data-reveal><a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="sizing"><WaIcon />{copy.sizing.cta}<span class="sr-only"> (abre em nova aba)</span></a></p>
         </div>
       </div>
     </section>
@@ -180,7 +180,7 @@ const products = [
         <h2 id="ct-t" data-reveal>{copy.form.title}</h2>
         <div>
           <p class="lead" data-reveal style="--d:1">{copy.form.intro}</p>
-          <p data-reveal style="--d:2"><a class="link-sub" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="form">{copy.header.whatsappCta}</a></p>
+          <p data-reveal style="--d:2"><a class="link-sub" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="form">{copy.header.whatsappCta}<span class="sr-only"> (abre em nova aba)</span></a></p>
         </div>
         <div class="sheet" data-reveal style="--d:1">
           <LeadForm

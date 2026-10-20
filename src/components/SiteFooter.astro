@@ -23,7 +23,7 @@ const dark = look !== 'light';
           <p class="tag display">{footer.tagline}</p>
         </>
       ) : (
-        <img class="logo-s" src={logoSlogan.src} width="2000" height="454" alt={`${BRAND}. ${SLOGAN}`} />
+        <img class="logo-s" src={logoSlogan.src} width="2000" height="454" loading="lazy" decoding="async" alt={`${BRAND}. ${SLOGAN}`} />
       )}
       <p class="made">{footer.madeBy}</p>
     </div>
@@ -33,7 +33,7 @@ const dark = look !== 'light';
       </ul>
     </nav>
     <div class="contact">
-      <a class="btn" href={waHref} target="_blank" rel="noopener" data-wa data-wa-place="footer"><WaIcon />{waLabel}</a>
+      <a class="btn" href={waHref} target="_blank" rel="noopener" data-wa data-wa-place="footer"><WaIcon />{waLabel}<span class="sr-only"> (abre em nova aba)</span></a>
       {(EMAIL || PHONE || ADDRESS) && (
         <ul class="plain info">
           {EMAIL && <li><a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>}
@@ -50,6 +50,8 @@ const dark = look !== 'light';
   .site-footer { padding-block: clamp(56px, 7vw, 104px) 28px; background: var(--cinza); color: var(--ink); }
   .look-blue { background: var(--azul); }
   .look-ink { background: var(--ink-deep); }
+  .look-blue, .look-ink { color: var(--branco); }
+  .look-blue a, .look-ink a { color: var(--branco); }
   .grid { display: grid; gap: 40px; }
   .id { display: grid; gap: 16px; align-content: start; }
   .logo-s { width: min(380px, 80%); height: auto; }
@@ -63,5 +65,6 @@ const dark = look !== 'light';
   .info { display: grid; gap: 6px; }
   .legal { margin-top: 48px; color: var(--muted); }
   .on-dark .legal { color: var(--azul-pale); }
+  @media (max-width: 899px) { .site-footer { padding-bottom: 100px; } }
   @media (min-width: 900px) { .grid { grid-template-columns: 1.4fr 1fr 1fr; gap: 64px; } }
 </style>

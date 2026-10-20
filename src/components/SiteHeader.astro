@@ -29,7 +29,7 @@ const dark = tone !== 'light';
         {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
       </ul>
     </nav>
-    <a class:list={['btn', 'head-cta', { plain: ctaStyle === 'plain' }]} href={ctaHref} target="_blank" rel="noopener" data-wa data-wa-place="header"><WaIcon />{cta}</a>
+    <a class:list={['btn', 'head-cta', { plain: ctaStyle === 'plain' }]} href={ctaHref} target="_blank" rel="noopener" data-wa data-wa-place="header"><WaIcon />{cta}<span class="sr-only"> (abre em nova aba)</span></a>
     <details class="menu">
       <summary aria-label="Menu"><span class="bars" aria-hidden="true"></span></summary>
       <ul class="plain panel">
@@ -86,6 +86,11 @@ const dark = tone !== 'light';
     d.addEventListener('click', (e) => {
       if ((e.target as HTMLElement).closest('a')) d.open = false;
     });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') d.open = false; });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && d.open) { d.open = false; d.querySelector('summary')?.focus(); }
+    });
+    document.addEventListener('click', (e) => {
+      if (d.open && !d.contains(e.target as Node)) d.open = false;
+    });
   });
 </script>

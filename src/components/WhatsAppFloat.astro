@@ -3,24 +3,23 @@ import WaIcon from './WaIcon.astro';
 interface Props { href: string; label: string }
 const { href, label } = Astro.props;
 ---
-<a class="wa-float btn" href={href} target="_blank" rel="noopener" data-wa data-wa-place="float" aria-label={label}><WaIcon /><span>{label}</span></a>
+<a class="wa-float btn" href={href} target="_blank" rel="noopener" data-wa data-wa-place="float" aria-label={label}><WaIcon /><span class="sr-only">{label}</span></a>
 
 <style>
   .wa-float {
     position: fixed; z-index: 60; right: 16px; bottom: max(16px, env(safe-area-inset-bottom));
-    min-height: 56px; padding: 0 22px 0 18px;
+    min-height: 56px; width: 56px; padding: 0;
     border-radius: 999px;
     border: 3px solid var(--ink-deep);
   }
-  .wa-float.compact { padding: 0; width: 56px; }
-  .wa-float.compact span { display: none; }
-  @media (min-width: 900px) { .wa-float { display: none; } }
+  :global(.js) .wa-float:not(.show) { display: none; }
+  @media (min-width: 900px) { .wa-float { display: none !important; } }
 </style>
 
 <script>
   const el = document.querySelector<HTMLElement>('.wa-float');
   if (el) {
-    const update = () => el.classList.toggle('compact', window.scrollY > 320);
+    const update = () => el.classList.toggle('show', window.scrollY > 600);
     update();
     addEventListener('scroll', update, { passive: true });
   }

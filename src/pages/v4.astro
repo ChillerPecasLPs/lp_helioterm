@@ -51,7 +51,7 @@ const nf = new Intl.NumberFormat('pt-BR');
         <div class="hero-text">
           <p class="lead" data-reveal style="--d:1">{copy.hero.subheadline}</p>
           <div class="actions" data-reveal style="--d:2">
-            <a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="hero"><WaIcon />{copy.hero.primaryCta}</a>
+            <a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="hero"><WaIcon />{copy.hero.primaryCta}<span class="sr-only"> (abre em nova aba)</span></a>
             <a class="link-sub" href="#dimensionamento">{copy.hero.secondaryCta}</a>
           </div>
           <ul class="ticks trust" data-reveal style="--d:3">
@@ -83,7 +83,7 @@ const nf = new Intl.NumberFormat('pt-BR');
             <li data-reveal style={`--d:${i}`}>
               <div class="m-name"><h3>{m.name}</h3><p class="m-max">até <strong>{nf.format(m.max)}</strong> kcal/h</p></div>
               <p class="m-tag">{m.tagline}</p>
-              <a class="btn" href={m.href} target="_blank" rel="noopener" data-wa data-wa-place={`model-${m.name}`} data-model={m.name}><WaIcon />{m.cta}</a>
+              <a class="btn" href={m.href} target="_blank" rel="noopener" data-wa data-wa-place={`model-${m.name}`} data-model={m.name}><WaIcon />{m.cta}<span class="sr-only"> (abre em nova aba)</span></a>
             </li>
           ))}
         </ul>
@@ -138,7 +138,7 @@ const nf = new Intl.NumberFormat('pt-BR');
             <h3>{copy.dehumidifiers.line.title}</h3>
             <p>{copy.dehumidifiers.line.text}</p>
           </div>
-          <a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="dehumidifiers"><WaIcon />{copy.dehumidifiers.cta}</a>
+          <a class="btn" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="dehumidifiers"><WaIcon />{copy.dehumidifiers.cta}<span class="sr-only"> (abre em nova aba)</span></a>
         </div>
       </div>
     </section>
@@ -181,7 +181,7 @@ const nf = new Intl.NumberFormat('pt-BR');
         <div>
           <h2 id="ct-t" data-reveal>{copy.form.title}</h2>
           <p class="lead" data-reveal style="--d:1">{copy.form.intro}</p>
-          <p data-reveal style="--d:2"><a class="link-sub" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="form">{copy.header.whatsappCta}</a></p>
+          <p data-reveal style="--d:2"><a class="link-sub" href={wa} target="_blank" rel="noopener" data-wa data-wa-place="form">{copy.header.whatsappCta}<span class="sr-only"> (abre em nova aba)</span></a></p>
         </div>
         <div class="sheet" data-reveal style="--d:1">
           <LeadForm

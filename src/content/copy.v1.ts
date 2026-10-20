@@ -47,7 +47,7 @@ export const copy = {
   },
   "hero": {
     "eyebrow": "Chiller Peças · chillers e desumidificadores fabricados pela Helioterm",
-    "headline": "Controle a temperatura do seu processo e mantenha a produção estável.",
+    "headline": "Controle a temperatura e mantenha a produção estável.",
     "subheadline": "Quando a operação depende de líquido resfriado e a temperatura sai do ponto, a produção espera. Os chillers compactos HTC mantêm o processo estável, e a Chiller Peças indica o modelo certo.",
     "primaryCta": "Controlar a temperatura no WhatsApp",
     "secondaryCta": "Ver os chillers HTC",
