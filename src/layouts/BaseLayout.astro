@@ -34,6 +34,9 @@ const { title, description, variant, bodyClass, internal = false } = Astro.props
   <body class={bodyClass} data-variant={variant} id="top">
     <a class="skip" href="#conteudo">Ir para o conteúdo</a>
     <slot />
+    <script>
+      import '../scripts/track';
+    </script>
     <script is:inline>
       (function () {
         var els = document.querySelectorAll('[data-reveal]');

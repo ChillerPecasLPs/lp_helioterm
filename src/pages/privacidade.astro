@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { BRAND, ADDRESS, EMAIL } from '../config/site';
+import { whatsappUrl } from '../lib/whatsapp';
+
+const wa = whatsappUrl();
+---
+<BaseLayout title="Política de privacidade | Chiller Peças" description="Como a Chiller Peças trata os dados enviados pelo formulário de contato desta página." internal bodyClass="privacy">
+  <SiteHeader nav={[]} cta="Chamar no WhatsApp" ctaHref={wa} tone="light" />
+
+  <main id="conteudo" class="section">
+    <div class="wrap prose">
+      <p><a class="link-sub" href="/" data-back>Voltar</a></p>
+      <h1>Política de privacidade</h1>
+      <p class="lead">Este texto explica como a {BRAND} trata os dados que você informa no formulário de contato desta página, em linha com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018, LGPD).</p>
+
+      <h2>Quem é o controlador</h2>
+      <p>{BRAND}.{ADDRESS && <> Endereço: {ADDRESS}.</>}{EMAIL && <> E-mail para assuntos de privacidade: <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</>}</p>
+
+      <h2>Quais dados coletamos</h2>
+      <ul>
+        <li>Nome.</li>
+        <li>Empresa (quando você informa).</li>
+        <li>Telefone ou WhatsApp com DDD.</li>
+        <li>E-mail (quando você informa).</li>
+        <li>Aplicação ou carga que você precisa atender e produto de interesse.</li>
+        <li>Dados técnicos básicos do envio: a página de origem, o endereço da página que levou você até aqui e os parâmetros de campanha presentes no link (utm_source, utm_medium, utm_campaign, utm_term, utm_content, gclid e fbclid), além de data e hora do envio.</li>
+      </ul>
+
+      <h2>Para que usamos</h2>
+      <p>Usamos os dados para responder ao seu pedido de contato e de orçamento. Os dados da página de origem e da campanha servem para saber por qual página ou anúncio o contato chegou.</p>
+
+      <h2>Base legal</h2>
+      <p>O tratamento se apoia no atendimento de pedido feito por você, para dar andamento a um possível contrato (procedimentos preliminares), e, quando for o caso, no legítimo interesse da {BRAND} de responder a quem a procura. Você pode pedir mais detalhes pelo e-mail abaixo.</p>
+
+      <h2>Com quem os dados podem ser compartilhados</h2>
+      <ul>
+        <li>WhatsApp (Meta): quando você usa o formulário ou os botões desta página, abrimos uma conversa no WhatsApp com os dados que você preencheu. A partir daí, valem os termos e a política de privacidade do WhatsApp.</li>
+        <li>Serviço que recebe o formulário: o envio do formulário pode ser entregue a um serviço de recebimento de mensagens ainda a definir. Quando ele for definido, esta página será atualizada com o nome do serviço.</li>
+      </ul>
+
+      <h2>Por quanto tempo guardamos</h2>
+      <p>Guardamos os dados pelo tempo necessário ao atendimento do seu pedido.</p>
+
+      <h2>Seus direitos</h2>
+      <p>Pelo artigo 18 da LGPD, você pode pedir: confirmação de que tratamos seus dados; acesso aos dados; correção de dados incompletos, inexatos ou desatualizados; anonimização, bloqueio ou eliminação de dados desnecessários ou tratados em desconformidade; portabilidade; informação sobre com quem compartilhamos os dados; informação sobre a possibilidade de não consentir e suas consequências; e a revogação do consentimento, quando o tratamento depender dele. Você também pode apresentar petição à Autoridade Nacional de Proteção de Dados (ANPD).</p>
+
+      <h2>Como falar com a gente</h2>
+      <p>{EMAIL ? <>Escreva para <a href={`mailto:${EMAIL}`}>{EMAIL}</a> com o seu pedido e o nome informado no formulário.</> : <>Fale com a gente pelo WhatsApp.</>}</p>
+
+      <p><a class="link-sub" href="/" data-back>Voltar</a></p>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .prose { max-width: 760px; }
+  .prose h1 { margin-block: 8px 20px; }
+  .prose h2 { font-size: var(--step-lead); margin-block: 36px 10px; }
+  .prose ul { padding-left: 1.2em; display: grid; gap: 8px; margin-block: 8px; }
+  .prose a:not(.link-sub) { text-decoration: underline; text-underline-offset: 0.2em; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('a[data-back]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      let sameOrigin = false;
+      try { sameOrigin = !!document.referrer && new URL(document.referrer).origin === location.origin; } catch { /* sem referrer */ }
+      if (sameOrigin && history.length > 1) { e.preventDefault(); history.back(); }
+    });
+  });
+</script>

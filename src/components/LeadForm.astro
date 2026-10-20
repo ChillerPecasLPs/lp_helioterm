@@ -1,12 +1,12 @@
 ---
 /**
- * Formulário de contato: SÓ MARKUP. Validação, envio, honeypot, fallback e eventos ficam com o agente 5.
- * Ganchos para o JS de integração:
+ * Formulário de contato. Validação, envio, honeypot, fallback pelo WhatsApp e eventos: src/scripts/lead-form.ts.
+ * Ganchos usados pelo script:
  *   form[data-lead-form]            · data-variant · data-form-endpoint (PUBLIC_FORM_ENDPOINT) · data-wa-base · data-wa-message
  *   [data-form-status="success"|"error"]  mensagens da copy (hidden)
  *   input[name=variant] oculto com o id da variante
  */
-import { FORM_ENDPOINT, WHATSAPP_NUMBER } from '../config/site';
+import { EMAIL, FORM_ENDPOINT, WHATSAPP_NUMBER } from '../config/site';
 import { whatsappUrl } from '../lib/whatsapp';
 
 type Field = { label: string; required: boolean; options?: readonly string[] };
@@ -52,6 +52,10 @@ const [noteHead, noteTail] = privacyNote ? privacyNote.split('política de priva
   data-wa-message={waMessage}
 >
   <input type="hidden" name="variant" value={variant} />
+  <div class="hp" aria-hidden="true">
+    <label for={`${id}-hp`}>Deixe este campo em branco</label>
+    <input id={`${id}-hp`} name="hp_url" type="text" tabindex="-1" autocomplete="off" />
+  </div>
   {order.map((key) => {
     const f = fields[key];
     if (!f) return null;
@@ -71,13 +75,20 @@ const [noteHead, noteTail] = privacyNote ? privacyNote.split('política de priva
         ) : (
           <input id={fid} name={key} type={a.type as any} autocomplete={a.autocomplete} inputmode={a.inputmode as any} required={req} aria-required={req ? 'true' : undefined} />
         )}
+        <p class="field-error" id={`${fid}-error`} hidden></p>
       </div>
     );
   })}
   <button class="btn btn--block" type="submit">{submit}</button>
   <p class="form-status" role="status" aria-live="polite" data-form-status="success" hidden>{success}</p>
   <p class="form-status" role="alert" data-form-status="error" hidden>{error}</p>
+  <p class="form-status" role="status" aria-live="polite" data-form-status="whatsapp" hidden><span data-wa-text></span> <a class="link-sub" href={whatsappUrl(undefined, WHATSAPP_NUMBER)} target="_blank" rel="noopener"></a></p>
+  <noscript><p class="form-note">O envio do formulário precisa de JavaScript. Fale com a gente pelo <a href={whatsappUrl(undefined, WHATSAPP_NUMBER)}>WhatsApp</a>{EMAIL ? <> ou por <a href={`mailto:${EMAIL}`}>{EMAIL}</a></> : null}.</p></noscript>
   {privacyNote && (
     <p class="form-note">{noteHead}<a href={privacyHref}>política de privacidade</a>{noteTail}</p>
   )}
 </form>
+
+<script>
+  import '../scripts/lead-form';
+</script>
