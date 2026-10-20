@@ -4,7 +4,7 @@
  * Gatilho principal: aversão à perda (hipótese a testar, sem prova controlada em B2B).
  * AIDA: Atenção = hero + pain (custo da inação) | Interesse = solution (como o chiller resolve)
  *       | Desejo = chillers (HTC com números do JSON) | Ação = form + botão de WhatsApp.
- * ctaEcho repete a headline: "Controle a temperatura do seu processo".
+ * ctaEcho curto, com a palavra-chave da headline: "Controlar a temperatura".
  */
 
 export const copy = {
@@ -15,15 +15,15 @@ export const copy = {
     "desire": "chillers",
     "action": "form"
   },
-  "ctaEcho": "Controle a temperatura do seu processo no WhatsApp",
+  "ctaEcho": "Controlar a temperatura no WhatsApp",
   "meta": {
-    "title": "Controle a temperatura do processo | Chiller Peças",
+    "title": "Chiller compacto para controle de temperatura | Chiller Peças",
     "description": "Chillers compactos HTC 03, 05 e 09 AR e desumidificadores industriais fabricados pela Helioterm. Chiller Peças: peça com agilidade."
   },
   "header": {
     "nav": [
       {
-        "label": "O custo da inação",
+        "label": "Por que controlar",
         "href": "#pain"
       },
       {
@@ -43,13 +43,13 @@ export const copy = {
         "href": "#contato"
       }
     ],
-    "whatsappCta": "Falar no WhatsApp"
+    "whatsappCta": "Chamar no WhatsApp"
   },
   "hero": {
     "eyebrow": "Chiller Peças · chillers e desumidificadores fabricados pela Helioterm",
-    "headline": "Controle a temperatura do seu processo antes que a máquina pare.",
+    "headline": "Controle a temperatura do seu processo e mantenha a produção estável.",
     "subheadline": "Quando a operação depende de líquido resfriado e a temperatura sai do ponto, a produção espera. Os chillers compactos HTC mantêm o processo estável, e a Chiller Peças indica o modelo certo.",
-    "primaryCta": "Controle a temperatura do seu processo no WhatsApp",
+    "primaryCta": "Controlar a temperatura no WhatsApp",
     "secondaryCta": "Ver os chillers HTC",
     "trust": [
       "Fabricante Helioterm",
@@ -64,15 +64,15 @@ export const copy = {
     "points": [
       {
         "title": "Processo que perde a estabilidade",
-        "text": "Máquinas que dependem de líquido resfriado, como injetoras, CNC e soldagem a laser, perdem desempenho quando a temperatura sai do ponto."
+        "text": "Injetoras, CNC e soldagem a laser dependem de líquido resfriado na temperatura de trabalho."
       },
       {
-        "title": "Produção que espera pelo reparo",
-        "text": "Equipamento parado trava a linha inteira. Ter o chiller certo instalado evita que a manutenção corra atrás do problema."
+        "title": "Chiller certo para a carga",
+        "text": "Um chiller dimensionado para a máquina garante estabilidade e desempenho nas operações que dependem de temperatura controlada."
       },
       {
         "title": "Umidade que estraga o produto",
-        "text": "Em ambientes industriais, umidade fora do ponto afeta a qualidade do produto e a segurança operacional. O desumidificador mecânico mantém a UR entre 30% e 80%."
+        "text": "A linha de desumidificadores Helioterm controla a umidade relativa entre 30% e 80%."
       }
     ]
   },
@@ -85,8 +85,8 @@ export const copy = {
         "text": "Compressor scroll com refrigerante R410A em equipamento condensado a ar."
       },
       {
-        "title": "Vai para a máquina em 1 a 2 dias",
-        "text": "O plug-and-play vem carregado de fábrica e testado. Falta ligar água e energia elétrica."
+        "title": "Plug-and-play, pronto para ligar",
+        "text": "Vem carregado de fábrica e testado. O fabricante cita 1 a 2 dias para instalar."
       },
       {
         "title": "Cabe onde o espaço é curto",
@@ -127,12 +127,12 @@ export const copy = {
         "text": "Design compacto para áreas com limitação de espaço físico. HTC 03, 05 e 09 AR ocupam as mesmas dimensões: 605 x 905 x 1080 mm."
       },
       {
-        "title": "Instalação em 1 a 2 dias",
-        "text": "O sistema plug-and-play vem carregado de fábrica com gás refrigerante e testado. Falta ligar a água e a energia elétrica e ajustar os parâmetros."
+        "title": "Plug-and-play, pronto para ligar",
+        "text": "Vem carregado de fábrica e testado. O fabricante cita 1 a 2 dias para instalar, incluindo as conexões hidráulicas e elétricas."
       },
       {
-        "title": "Silencioso o bastante para ficar perto",
-        "text": "Os chillers compactos Helioterm operam entre 55 e 65 dB(A) a 1 metro de distância. Compressor scroll faz menos ruído que pistão."
+        "title": "Operação silenciosa",
+        "text": "Os compactos Helioterm operam entre 55 e 65 dB(A) a 1 metro, segundo o fabricante."
       },
       {
         "title": "Controle digital e proteções elétricas",
@@ -150,46 +150,44 @@ export const copy = {
         "tagline": "De 2.760 a 5.910 kcal/h, COP 1,72, no mesmo gabinete do HTC 03."
       },
       "HTC 09 AR": {
-        "tagline": "De 5.720 a 11.100 kcal/h, COP 2,53 e conexões de 1.1/2\"."
+        "tagline": "De 5.720 a 11.100 kcal/h, COP 2,53 e conexões de 1 1/2\"."
       }
     }
   },
   "dehumidifiers": {
     "title": "Desumidificadores industriais dutado e portátil",
-    "intro": "Umidade fora do ponto estraga produto e atrapalha o processo. Os dois formatos seguem a linha de desumidificação mecânica da Helioterm, projetada para ambientes industriais com controle de umidade relativa.",
+    "intro": "Umidade fora do ponto estraga produto e atrapalha o processo. Dutado e portátil fazem parte da oferta de desumidificação industrial fabricada pela Helioterm.",
     "products": {
       "dutado": {
         "name": "Desumidificador industrial dutado",
-        "tagline": "Para ambientes que pedem ar tratado conduzido por dutos.",
+        "tagline": "Para tratar o ar do ambiente com distribuição por dutos.",
         "bullets": [
-          "Controle de umidade relativa de 30% a 80% UR (linha Helioterm)",
-          "Compressor scroll e controlador digital microprocessado com display LCD",
-          "Filtro de ar G4 lavável e reutilizável",
-          "Conformidade com as normas NR-10 e NR-12"
+          "Ar tratado conduzido por dutos",
+          "Indicado para tratar o ambiente",
+          "Para indicar a capacidade, mande o volume do ambiente e a umidade desejada"
         ],
-        "specsStatus": "Especificações do modelo dutado: A CONFIRMAR"
+        "specsStatus": "Capacidade: informe o seu ambiente e a gente indica."
       },
       "portatil": {
         "name": "Desumidificador industrial portátil",
-        "tagline": "Para tratar o ar onde a umidade aparece, sem obra de instalação.",
+        "tagline": "Para tratar o ar onde a umidade aparece.",
         "bullets": [
-          "Controle de umidade relativa de 30% a 80% UR (linha Helioterm)",
-          "Compressor scroll e controlador digital microprocessado com display LCD",
-          "Filtro de ar G4 lavável e reutilizável",
-          "Conformidade com as normas NR-10 e NR-12"
+          "Pode ser levado de um ponto a outro",
+          "Indicado para tratar um ponto específico",
+          "Para indicar a capacidade, mande o volume do ambiente e a umidade desejada"
         ],
-        "specsStatus": "Especificações do modelo portátil: A CONFIRMAR"
+        "specsStatus": "Capacidade: informe o seu ambiente e a gente indica."
       }
     },
     "line": {
-      "title": "A linha Helioterm vai de 150 a 1.300 litros por dia",
-      "text": "É a faixa de remoção de umidade da linha de desumidificadores Helioterm. A capacidade de cada formato, dutado ou portátil, entra assim que o fabricante confirmar: A CONFIRMAR."
+      "title": "Linha de desumidificadores Helioterm: 150 a 1.300 litros por dia",
+      "text": "Controle de umidade relativa de 30% a 80% UR, compressor scroll, controlador digital e filtro G4 lavável. Dutado ou portátil, a capacidade ideal depende do seu ambiente. Mande o volume e a umidade desejada que a gente indica."
     },
-    "cta": "Falar sobre desumidificação no WhatsApp"
+    "cta": "Pedir desumidificador no WhatsApp"
   },
   "sizing": {
     "title": "Dimensionamento",
-    "intro": "Mande os dados da aplicação e a engenharia indica o equipamento.",
+    "intro": "Mande os dados da aplicação e a nossa equipe técnica indica o equipamento.",
     "inputs": [
       "Carga térmica da aplicação",
       "Temperaturas de entrada e de saída desejadas",
@@ -198,7 +196,7 @@ export const copy = {
       "Alimentação elétrica disponível (tensão e frequência)",
       "Para desumidificação: volume do ambiente e umidade relativa desejada"
     ],
-    "note": "Não tem todos os dados à mão? Mande o que tiver e descreva a máquina ou o processo.",
+    "note": "Não tem todos os dados à mão? Mande o que tiver e descreva a máquina ou o processo. Carga acima de 11.100 kcal/h (cerca de 3,7 TR)? A linha HTC segue até 73.200 kcal/h. Fale com a nossa equipe.",
     "cta": "Pedir dimensionamento"
   },
   "whyUs": {
@@ -215,15 +213,15 @@ export const copy = {
       },
       {
         "title": "Entregas em nível nacional",
-        "text": "Atendemos indústrias de todo o país. Prazo por região: A CONFIRMAR."
+        "text": "Atendemos indústrias de todo o país. Informe a cidade da instalação na sua mensagem."
       },
       {
-        "title": "Excelente custo-benefício",
-        "text": "Equipamento de fabricante com linha técnica completa. Condições comerciais: A CONFIRMAR."
+        "title": "Linha técnica completa",
+        "text": "Chillers e desumidificadores de um fabricante que publica catálogo, manual de instalação e termo de garantia."
       },
       {
         "title": "Linguagem de técnico para técnico",
-        "text": "Quem especifica recebe dados de capacidade, vazão, elétrica e dimensões, sem rodeio."
+        "text": "Quem especifica recebe dados de capacidade, vazão, elétrica e dimensões."
       }
     ]
   },
@@ -239,16 +237,12 @@ export const copy = {
         "a": "Os compactos (1 a 25 TR) servem para espaços reduzidos, demandas menores, instalação rápida e menor investimento inicial. Os industriais (25 a 400 TR) são indicados para grandes demandas térmicas, operação contínua 24/7, necessidade de redundância e processos críticos."
       },
       {
-        "q": "Qual a temperatura mínima de água gelada do chiller compacto?",
-        "a": "Na configuração padrão, os chillers compactos Helioterm fornecem água gelada de 5°C a 20°C. Para temperaturas abaixo de 5°C é necessário usar solução de glicol e configurar o equipamento para operação em baixa temperatura."
-      },
-      {
         "q": "O chiller compacto pode ser instalado do lado de fora?",
-        "a": "Pode. Os compactos condensados a ar aceitam áreas externas cobertas ou semicobertas, com proteção contra chuva direta e boa circulação de ar. Em ambientes de temperatura alta, considere a versão com condensador remoto."
+        "a": "Segundo o fabricante, os compactos condensados a ar aceitam áreas externas cobertas ou semicobertas, com proteção contra chuva direta e boa circulação de ar. Em ambientes de temperatura alta, considere a versão com condensador remoto."
       },
       {
         "q": "Quanto tempo leva para instalar um chiller compacto?",
-        "a": "Os chillers plug-and-play podem ser instalados em 1 a 2 dias, incluindo as conexões hidráulicas e elétricas. O sistema vem carregado de fábrica com gás refrigerante e testado. Basta conectar a tubulação de água e a energia elétrica e configurar os parâmetros."
+        "a": "O fabricante cita 1 a 2 dias para instalar os chillers plug-and-play, incluindo as conexões hidráulicas e elétricas. O sistema vem carregado de fábrica com gás refrigerante e testado. Basta conectar a tubulação de água e a energia elétrica e configurar os parâmetros."
       },
       {
         "q": "O desumidificador mecânico funciona em baixas temperaturas?",
@@ -260,12 +254,25 @@ export const copy = {
     "title": "Controle a temperatura do seu processo. Conte a aplicação.",
     "intro": "Preencha o formulário ou chame no WhatsApp.",
     "fields": {
-      "name": "Nome",
-      "company": "Empresa",
-      "phone": "Telefone com DDD (WhatsApp)",
-      "email": "E-mail corporativo",
+      "name": {
+        "label": "Nome",
+        "required": true
+      },
+      "company": {
+        "label": "Empresa (opcional)",
+        "required": false
+      },
+      "phone": {
+        "label": "Telefone com DDD (WhatsApp)",
+        "required": true
+      },
+      "email": {
+        "label": "E-mail (opcional)",
+        "required": false
+      },
       "product": {
-        "label": "Qual equipamento você procura?",
+        "label": "Qual equipamento você procura? (opcional)",
+        "required": false,
         "options": [
           "Chiller compacto HTC 03 AR",
           "Chiller compacto HTC 05 AR",
@@ -275,45 +282,50 @@ export const copy = {
           "Ainda não sei, preciso de dimensionamento"
         ]
       },
-      "application": "Qual é a aplicação? (ex.: injetora, CNC, sala de pintura)",
-      "message": "Dados que você já tem (carga térmica, temperaturas, vazão, ambiente)"
+      "application": {
+        "label": "Aplicação e dados que você já tem (carga térmica, temperaturas, vazão, ambiente)",
+        "required": true
+      }
     },
-    "submit": "Enviar e pedir dimensionamento",
+    "submit": "Enviar pedido",
     "success": "Recebemos seus dados. A Chiller Peças entra em contato em breve.",
-    "error": "Não foi possível enviar agora. Tente de novo ou fale com a gente no WhatsApp.",
-    "privacyNote": "Usamos seus dados apenas para responder a esta solicitação. Política de privacidade: A CONFIRMAR."
+    "error": "Não foi possível enviar agora. Tente de novo ou chame a gente no WhatsApp.",
+    "privacyNote": "Usamos seus dados só para responder a este pedido. Veja a política de privacidade.",
+    "privacyHref": "/privacidade"
   },
   "whatsapp": {
-    "defaultMessage": "Olá, vim pela página da Chiller Peças [v1] e quero controlar a temperatura do meu processo. Pode me indicar o equipamento?",
-    "floatingLabel": "Falar no WhatsApp"
+    "defaultMessage": "Olá, vim pela página da Chiller Peças (ref. v1) e quero controlar a temperatura do meu processo. Pode me indicar o equipamento?",
+    "floatingLabel": "Chamar no WhatsApp"
   },
   "footer": {
     "tagline": "Peça com agilidade. Chiller Peças.",
     "madeBy": "Equipamentos fabricados pela Helioterm.",
-    "legal": "© Chiller Peças. Todos os direitos reservados. CNPJ e endereço: A CONFIRMAR."
+    "legal": "© Chiller Peças. Todos os direitos reservados."
   },
   "claimsToConfirm": [
-    "Dimensionamento gratuito: o site Helioterm cita 'Dimensionamento gratuito'. A LP usa só 'Dimensionamento'. Confirmar se a Chiller Peças oferece sem custo.",
+    "Dimensionamento gratuito: o site Helioterm cita; a LP usa só 'Dimensionamento'. Confirmar se a Chiller Peças oferece sem custo.",
     "Faturamento facilitado (persona Carlos): fora do texto. Confirmar condições antes de usar.",
-    "Entregas em nível nacional: vem do manual de marca. Confirmar prazo por região.",
-    "Preço competitivo / excelente custo-benefício: vem do manual de marca, sem número. Confirmar política de preço ou condição a citar.",
+    "Entregas em nível nacional: vem do manual de marca. Confirmar cobertura e prazo por região.",
+    "Preço competitivo e excelente custo-benefício: saíram da página (manual de marca, sem número). Reintroduzir só com política de preço.",
     "Prazo e horário de resposta no WhatsApp: não afirmados. Confirmar.",
     "Economia de até 40% em energia (FreeDry), até 4,5 L/kWh (SMER) e 50+ anos de engenharia: fora do texto. Dependem de documento técnico ou confirmação da Helioterm.",
-    "Desumidificadores dutado e portátil: confirmar com a Helioterm que as características de linha (30% a 80% UR, compressor scroll, controle digital, filtro G4, NR-10/NR-12) valem para os dois formatos.",
-    "Descrição dos formatos ('conduzido por dutos', 'sem obra de instalação'): inferida do nome. Confirmar com o fabricante.",
-    "Ruído de 55 a 65 dB(A) e instalação em 1 a 2 dias: vêm das FAQs dos compactos Helioterm (linha geral). Confirmar que valem para HTC 03, 05 e 09 AR.",
-    "Faixa de temperatura do JSON (-8 a 10°C nos HTC 03/05; -6 a 10°C no HTC 09) não foi usada: difere da FAQ (água gelada de 5 a 20°C). Confirmar o significado antes de publicar.",
-    "Política de privacidade e uso de dados (LGPD): compromisso da Chiller Peças. Confirmar com o jurídico.",
-    "v1: afirmações sobre efeitos da falta de refrigeração (perda de desempenho, linha parada) são raciocínio geral. Confirmar se o cliente quer sustentá-las com caso real da Chiller Peças."
+    "Características da linha de desumidificadores (30% a 80% UR, scroll, controle digital, filtro G4) aparecem como da linha Helioterm, não do dutado ou do portátil. Confirmar quais valem para cada formato. NR-10/NR-12 saiu da página pelo mesmo motivo.",
+    "Descrição dos formatos ('conduzido por dutos', 'levado de um ponto a outro'): inferida do nome. Confirmar com o fabricante.",
+    "Ruído de 55 a 65 dB(A) e 1 a 2 dias de instalação: vêm das FAQs dos compactos Helioterm (linha geral), atribuídos ao fabricante. Confirmar que valem para HTC 03, 05 e 09 AR.",
+    "Faixa de temperatura do JSON (-8 a 10°C nos HTC 03/05; -6 a 10°C no HTC 09) conflita com a FAQ do site (água gelada de 5 a 20°C). A pergunta 'temperatura mínima' saiu da página até o significado ser confirmado.",
+    "Catálogo, manual de instalação e termo de garantia (citados no site Helioterm): confirmar se a Chiller Peças pode oferecê-los antes de manter o texto 'Linha técnica completa'.",
+    "Uso dos dados só para responder ao pedido (LGPD): compromisso da Chiller Peças. Confirmar com o jurídico.",
+    "v1: os textos de 'pain' são enquadramento geral (definição de chiller do manual de marca e aplicações do site). Nenhum efeito é quantificado. Confirmar se o cliente prefere ancorar em caso real."
   ],
   "pending": [
-    "Dutado: capacidade (L/dia), vazão de ar, potência, dimensões, peso, ruído. A CONFIRMAR",
-    "Portátil: capacidade (L/dia), vazão de ar, potência, dimensões, peso, ruído. A CONFIRMAR",
+    "Dutado: capacidade (L/dia), vazão de ar, potência total, dimensões, peso, ruído. A CONFIRMAR",
+    "Portátil: capacidade (L/dia), vazão de ar, potência total, dimensões, peso, ruído. A CONFIRMAR",
     "Prazo de entrega por região. A CONFIRMAR",
     "Condições comerciais e faturamento. A CONFIRMAR",
     "Número e link do WhatsApp comercial.",
-    "Política de privacidade (URL e texto).",
-    "CNPJ, razão social e endereço para o rodapé.",
+    "Página de privacidade (/privacidade): ainda não existe.",
+    "CNPJ, razão social e endereço (saíram do rodapé; incluir quando confirmados).",
+    "Oferta de catálogo, manual e termo de garantia pela Chiller Peças.",
     "Fotos dos equipamentos e confirmação do uso dos renders.",
     "Destino do formulário (e-mail ou CRM).",
     "Aprovação dos nomes 'dutado' e 'portátil' como nomes de produto."
